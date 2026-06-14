@@ -1,0 +1,131 @@
+---
+
+import { services } from '../data/services';
+
+---
+<section id="services">
+  <div class="services-header reveal">
+    <div>
+      <div class="section-label">What We Do</div>
+      <h2 class="section-title">Our Core<br /><span>Services</span></h2>
+    </div>
+    <p class="services-desc">From television production to digital content and full-scale event coverage, we deliver world-class media for Uganda, East Africa, and beyond.</p>
+  </div>
+
+  <div class="services-grid">
+    {services.map((s, i) => (
+      <a href={`/services/${s.slug}`} class={`service-card reveal stagger-${(i % 2) + 1}`}>
+        <span class="service-num">{String(i + 1).padStart(2, '0')}</span>
+        <div class="service-icon">
+          <svg width="24" height="24" fill="none" stroke="var(--color-green)" stroke-width="2" viewBox="0 0 24 24" set:html={s.icon}></svg>
+        </div>
+        <div class="service-body">
+          <div class="service-name">{s.name}</div>
+          <p class="service-text">{s.blurb}</p>
+        </div>
+      </a>
+    ))}
+  </div>
+</section>
+
+<style>
+  #services { padding: 120px 8% 100px; background: var(--color-off-white); }
+
+  .services-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 56px;
+    gap: 40px;
+  }
+  .services-desc {
+    font-size: 0.95rem;
+    color: var(--color-text-muted);
+    max-width: 360px;
+    line-height: 1.75;
+    font-weight: 300;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+  }
+  .service-card {
+    position: relative;
+    display: flex;
+    gap: 22px;
+    align-items: flex-start;
+    background: #fff;
+    border: 1px solid var(--color-light-gray);
+    border-radius: 16px;
+    padding: 28px 30px;
+    overflow: hidden;
+    text-decoration: none;
+    color: inherit;
+    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s, background 0.3s;
+  }
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0; bottom: 0; left: 0;
+    width: 3px;
+    background: linear-gradient(180deg, var(--color-green-light), var(--color-blue-mid));
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: transform 0.4s ease;
+  }
+  .service-card:hover {
+    transform: translateY(-6px);
+    background: linear-gradient(135deg, #1A8A5A 0%, #1565C0 100%);
+    box-shadow: 0 22px 48px rgba(21,101,192,0.28);
+    border-color: transparent;
+    --color-green: #ffffff;            /* icon stroke → white */
+  }
+  .service-card:hover::before { opacity: 0; }
+  .service-card:hover .service-name { color: #fff; }
+  .service-card:hover .service-text { color: rgba(255,255,255,0.85); }
+  .service-card:hover .service-num  { color: rgba(255,255,255,0.18); }
+  .service-icon {
+    width: 54px; height: 54px;
+    flex-shrink: 0;
+    background: var(--color-green-pale);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s, background 0.3s;
+  }
+  .service-card:hover .service-icon { transform: scale(1.06); background: rgba(255,255,255,0.18); }
+  .service-body { flex: 1; }
+  .service-name {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.25rem;
+    color: var(--color-navy);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    margin-bottom: 0.4rem;
+    line-height: 1.1;
+  }
+  .service-text {
+    font-size: 0.88rem;
+    color: var(--color-text-muted);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+  .service-num {
+    position: absolute;
+    top: 16px; right: 22px;
+    font-family: var(--font-heading);
+    font-size: 2.2rem;
+    font-weight: 800;
+    color: rgba(26,86,160,0.06);
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  @media (max-width: 900px) {
+    .services-grid { grid-template-columns: 1fr; }
+  }
+</style>

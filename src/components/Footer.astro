@@ -1,0 +1,98 @@
+---
+import { programs } from '../data/programs';
+---
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand-col">
+      <img src="/logo.jpg" alt="Quiz Malie Uganda Limited" class="footer-logo" />
+      <p class="footer-tagline">Uganda's premier educational media company — quiz competitions, school debates, and inspiring health and digital content.</p>
+    </div>
+    <div>
+      <p class="footer-nav-title">Navigate</p>
+      <ul class="footer-nav-list">
+        <li><a href="/#home">Home</a></li>
+        <li><a href="/#about">About Us</a></li>
+        <li><a href="/#services">Services</a></li>
+        <li><a href="/#gallery">Programs & Gallery</a></li>
+        <li><a href="/#contact">Contact Us</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer-nav-title">Programs</p>
+      <ul class="footer-nav-list">
+        {programs.map((p) => (
+          <li><a href={`/programs/${p.slug}`}>{p.title}</a></li>
+        ))}
+      </ul>
+    </div>
+    <div>
+      <p class="footer-nav-title">Connect</p>
+      <ul class="footer-nav-list">
+        <li><a href="https://www.youtube.com/@QuizMalieProduction">YouTube</a></li>
+        <li><a href="https://www.linkedin.com/in/damalie-achan-3416a91bb/">LinkedIn</a></li>
+        <li><a href="https://www.facebook.com/quizmalie/?locale=es_LA">Facebook</a></li>
+        <li><a href="https://x.com/QuizMalie">X</a></li>
+        <li><a href="https://www.instagram.com/quizmalie/">Instagram</a></li>
+        <li><a href="mailto:quizmalie@gmail.com">Email Us</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2026 Quiz Malie Uganda Limited. All rights reserved.</span>
+    <span>Made with ♥ by Deign&reg</span>
+  </div>
+</footer>
+
+<style>
+  footer { background: var(--color-dark); color: rgba(255,255,255,0.7); padding: 60px 8% 30px; }
+  .footer-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-bottom: 40px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  .footer-brand-col { max-width: 280px; }
+  .footer-logo {
+    height: 54px;
+    width: auto;
+    object-fit: contain;
+    background: #fff;
+    border-radius: 10px;
+    padding: 5px 12px;
+    margin-bottom: 1rem;
+    display: block;
+  }
+  .footer-tagline { font-size: 0.88rem; color: rgba(255,255,255,0.4); line-height: 1.6; }
+  .footer-nav-title {
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.5);
+    margin-bottom: 1rem;
+  }
+  .footer-nav-list { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .footer-nav-list a {
+    color: rgba(255,255,255,0.65);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.25s;
+  }
+  .footer-nav-list a:hover { color: var(--color-green-light); }
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 24px;
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.3);
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  @media (max-width: 768px) {
+    .footer-top { flex-direction: column; gap: 32px; }
+  }
+</style>

@@ -1,0 +1,127 @@
+---
+---
+<section id="testimonials">
+  <div class="testi-head reveal">
+    <div class="section-label">What They Say</div>
+    <h2 class="section-title">Voices That <span>Matter</span></h2>
+  </div>
+
+  <div class="testimonials-grid">
+    <div class="testi-card reveal stagger-1">
+      <div class="testi-quote-mark">"</div>
+      <p class="testi-text">Quiz Malie transformed how our pupils approach learning. The competition gave them a stage, and their confidence has soared ever since. They've never been the same.</p>
+      <div class="testi-author">
+        <div class="testi-avatar">SK</div>
+        <div>
+          <span class="testi-name">Sarah K.</span>
+          <span class="testi-role">Head Teacher, Namugongo Girls School</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="testi-card reveal stagger-2">
+      <div class="testi-quote-mark">"</div>
+      <p class="testi-text">As a partner, the return on impact is unmatched. Quiz Malie reaches families, educators, and learners in a way no other media platform in Uganda does. Proud to be part of it.</p>
+      <div class="testi-author">
+        <div class="testi-avatar">JM</div>
+        <div>
+          <span class="testi-name">James M.</span>
+          <span class="testi-role">Marketing Director, Partner Brand</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="testi-card reveal stagger-3">
+      <div class="testi-quote-mark">"</div>
+      <p class="testi-text">Watching my daughter compete on the national stage was the proudest moment of my life as a parent. Quiz Malie isn't just a show — it's a movement for Uganda's future.</p>
+      <div class="testi-author">
+        <div class="testi-avatar">PN</div>
+        <div>
+          <span class="testi-name">Patricia N.</span>
+          <span class="testi-role">Parent, Kampala</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  #testimonials {
+    padding: 120px 8% 100px;
+    background: var(--color-navy);
+    position: relative;
+    overflow: hidden;
+  }
+  #testimonials::before {
+    content: '';
+    position: absolute;
+    top: -200px; right: -200px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(40,184,112,0.08) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  /* Light heading on navy */
+  .testi-head .section-label { color: #6ae8b0; }
+  .testi-head .section-title { color: #fff; }
+  .testi-head .section-title span { color: var(--color-green-light); }
+
+  .testimonials-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 50px;
+  }
+  .testi-card {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 16px;
+    padding: 32px 28px;
+    position: relative;
+    transition: background 0.3s, border-color 0.3s, transform 0.3s;
+  }
+  .testi-card:hover { background: rgba(255,255,255,0.08); border-color: rgba(40,184,112,0.3); transform: translateY(-6px); }
+  .testi-quote-mark {
+    font-family: var(--font-heading);
+    font-size: 5rem;
+    font-weight: 800;
+    color: var(--color-green-light);
+    line-height: 0.8;
+    margin-bottom: 1rem;
+    opacity: 0.6;
+  }
+  .testi-text {
+    font-size: 0.95rem;
+    color: rgba(255,255,255,0.75);
+    line-height: 1.8;
+    font-weight: 300;
+    font-style: italic;
+    margin-bottom: 1.5rem;
+  }
+  .testi-author {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding-top: 1.2rem;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+  .testi-avatar {
+    width: 42px; height: 42px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, var(--color-green-light), var(--color-blue-mid));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1rem;
+    color: #fff;
+    flex-shrink: 0;
+  }
+  .testi-name { font-size: 0.9rem; font-weight: 600; color: #fff; display: block; }
+  .testi-role { font-size: 0.78rem; color: rgba(255,255,255,0.45); display: block; margin-top: 2px; }
+
+  @media (max-width: 900px) {
+    .testimonials-grid { grid-template-columns: 1fr; }
+  }
+</style>

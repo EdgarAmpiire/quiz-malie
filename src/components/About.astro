@@ -1,0 +1,348 @@
+---
+
+const leaders = [
+  { name: 'Damalie Patra Achan', title: 'Chief Executive Officer', photo: 'https://i.pravatar.cc/500?img=12' },
+  { name: 'Maxencia Nanjura', title: 'Head Projects', photo: 'https://i.pravatar.cc/500?img=33' },
+  { name: 'Aaron Tumukunde', title: 'Operations  Manager', photo: 'https://i.pravatar.cc/500?img=5' },
+];
+
+---
+<section id="about">
+  <!-- Intro -->
+  <div class="about-grid">
+    <div class="reveal-left">
+      <div class="section-label">Who We Are</div>
+      <h2 class="about-headline">Uganda's Leading <span>Educational Media</span> Company</h2>
+      <p class="about-text">Quiz Malie Uganda Limited is a fully registered media company based in Uganda with over 15 years of experience in the media and communications industry. Since our founding, we've been dedicated to creating impactful, educational, and entertaining content for audiences across Uganda, East Africa, and the wider African continent.</p>
+
+      <div class="stats-row">
+        <div class="stat-item">
+          <span class="stat-num">1M<span>+</span></span>
+          <span class="stat-lbl">Viewers Reached</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-num">3</span>
+          <span class="stat-lbl">Major Media Partners</span>
+        </div>
+
+        <a href="/about" class="about-cta">
+          More About Us
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+      </a>
+      </div>
+    </div>
+
+
+
+    <div class="about-img-block reveal-right">
+      <div class="about-img-main">
+        <img src="/about-us/hero.jpg" alt="Quiz Malie production" />
+      </div>
+      
+      <div class="about-badge">
+        <span class="num">15<span>+</span></span>
+        <span class="lbl">Years Experience</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tagline -->
+  <div class="about-tagline reveal">
+    <p>Educating, Inspiring, and <span>Transforming Lives</span> Through Media</p>
+  </div>
+
+  <!-- Leadership -->
+  <div class="leadership reveal">
+    <h3 class="leadership-title">Our Leadership</h3>
+    <div class="leadership-grid">
+      {leaders.map((m) => (
+        <div class="leader-card">
+          <div class="leader-photo"><img src={m.photo} alt={m.name} loading="lazy" /></div>
+          <h4 class="leader-name">{m.name}</h4>
+          <p class="leader-role">{m.title}</p>
+        </div>
+      ))}
+    </div>
+    <a href="/about#team" class="leadership-btn">
+      Meet the Full Team
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+    </a>
+  </div>
+</section>
+
+<style>
+  #about { padding: 120px 8% 100px; background: #fff; }
+
+  /* Intro */
+  .about-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+  .about-headline {
+    font-family: var(--font-heading);
+    font-weight: 800;
+    font-size: clamp(2.5rem, 4vw, 4rem);
+    line-height: 1;
+    text-transform: uppercase;
+    color: var(--color-navy);
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.01em;
+  }
+  .about-headline span { color: var(--color-green); }
+  .about-text {
+    font-size: 1rem;
+    color: var(--color-text-muted);
+    line-height: 1.8;
+    margin-bottom: 1.5rem;
+    font-weight: 300;
+  }
+  .stats-row {
+    display: flex;
+    gap: 40px;
+    margin-top: 2.5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--color-light-gray);
+  }
+  .stat-num {
+    font-family: var(--font-heading);
+    font-size: 2.6rem;
+    font-weight: 800;
+    color: var(--color-navy);
+    line-height: 1;
+    display: block;
+  }
+  .stat-num span { color: var(--color-green); }
+  .stat-lbl {
+    font-size: 0.82rem;
+    color: var(--color-text-muted);
+    font-weight: 400;
+    letter-spacing: 0.04em;
+    margin-top: 4px;
+    display: block;
+  }
+  .about-img-block { position: relative; }
+  .about-img-main {
+    width: 100%;
+    aspect-ratio: 4/3;
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .about-img-main img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .about-logo-badge {
+    position: absolute;
+    top: -18px; left: -18px;
+    background: #fff;
+    border-radius: 12px;
+    padding: 10px 14px;
+    box-shadow: 0 8px 30px rgba(13,59,122,0.15);
+  }
+  .about-logo-badge img { height: 48px; width: auto; object-fit: contain; display: block; }
+  .about-badge {
+    position: absolute;
+    bottom: -20px; right: -20px;
+    background: var(--color-green-light);
+    color: #fff;
+    padding: 20px 24px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 8px 32px rgba(40,184,112,0.3);
+  }
+  .about-badge .num {
+    font-family: var(--font-heading);
+    font-size: 2.8rem;
+    font-weight: 800;
+    line-height: 1;
+    display: block;
+  }
+  .about-badge .num span { font-size: 1.5rem; }
+  .about-badge .lbl {
+    font-size: 0.78rem;
+    font-weight: 500;
+    letter-spacing: 0.08em;
+    opacity: 0.9;
+    text-transform: uppercase;
+  }
+
+  /* Feature cards */
+  .about-features {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+    margin-top: 90px;
+  }
+  .about-feature {
+    background: #fff;
+    border: 1px solid var(--color-light-gray);
+    border-radius: 16px;
+    padding: 32px 28px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+  }
+  .about-feature::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--color-green-light), var(--color-blue-mid));
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+  .about-feature:hover { transform: translateY(-8px); box-shadow: 0 20px 50px rgba(13,59,122,0.12); border-color: transparent; }
+  .about-feature:hover::before { transform: scaleX(1); }
+  .feature-icon {
+    width: 52px; height: 52px;
+    background: var(--color-green-pale);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+  }
+  .feature-icon svg { stroke: var(--color-green); }
+  .feature-name {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: var(--color-navy);
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    margin-bottom: 0.6rem;
+  }
+  .feature-text {
+    font-size: 0.9rem;
+    color: var(--color-text-muted);
+    line-height: 1.75;
+    font-weight: 300;
+  }
+
+  /* Mission & Vision */
+  .about-mv {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 24px;
+  }
+  .mv-card {
+    border-radius: 16px;
+    padding: 36px 34px;
+    border: 1px solid var(--color-light-gray);
+    background: var(--color-off-white);
+  }
+  .mv-card.mission { border-top: 3px solid var(--color-green-light); }
+  .mv-card.vision { border-top: 3px solid var(--color-blue-mid); }
+  .mv-head {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 1rem;
+  }
+  .mv-icon {
+    width: 46px; height: 46px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+  }
+  .mv-card.mission .mv-icon { background: var(--color-green-pale); }
+  .mv-card.mission .mv-icon svg { stroke: var(--color-green); }
+  .mv-card.vision .mv-icon { background: #e6effb; }
+  .mv-card.vision .mv-icon svg { stroke: var(--color-blue); }
+  .mv-label {
+    font-family: var(--font-heading);
+    font-weight: 800;
+    font-size: 1.6rem;
+    text-transform: uppercase;
+    color: var(--color-navy);
+    letter-spacing: 0.02em;
+  }
+  .mv-text {
+    font-size: 0.98rem;
+    color: var(--color-text-muted);
+    line-height: 1.8;
+    font-weight: 300;
+  }
+
+  /* Tagline */
+  .about-tagline {
+    margin-top: 60px;
+    text-align: center;
+    padding: 0 6%;
+  }
+  .about-tagline p {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: clamp(1.4rem, 2.6vw, 2.2rem);
+    text-transform: uppercase;
+    color: var(--color-navy);
+    letter-spacing: 0.01em;
+    line-height: 1.25;
+  }
+  .about-tagline p span { color: var(--color-green); }
+
+  .about-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 1px;
+    background: var(--color-green-light);
+    color: #fff;
+    padding: 14px 30px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: background 0.25s, transform 0.2s, box-shadow 0.25s;
+  }
+  .about-cta:hover { background: #22a065; transform: translateY(-2px); box-shadow: 0 10px 28px rgba(40,184,112,0.3); }
+
+
+
+  @media (max-width: 900px) {
+    .about-grid { grid-template-columns: 1fr; gap: 40px; }
+    .about-features { grid-template-columns: 1fr; }
+    .about-mv { grid-template-columns: 1fr; }
+  }
+
+  .leadership { margin-top: 64px; text-align: center; }
+  .leadership-title {
+    font-family: var(--font-heading);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    color: var(--color-navy);
+    margin-bottom: 36px;
+    letter-spacing: 0.5px;
+  }
+  .leadership-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 32px;
+    max-width: 760px;
+    margin: 0 auto 40px;
+  }
+  .leader-card { text-align: center; }
+  .leader-photo {
+    width: 150px; height: 150px;
+    margin: 0 auto 18px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 4px solid #fff;
+    outline: 2px solid var(--color-green-pale);
+    box-shadow: 0 10px 30px rgba(13,59,122,0.15);
+  }
+  .leader-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .leader-name { font-family: var(--font-heading); font-size: 1.25rem; color: var(--color-text); margin-bottom: 4px; }
+  .leader-role { color: var(--color-green); font-weight: 600; font-size: 0.95rem; }
+  .leadership-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--color-green); color: #fff;
+    padding: 14px 30px; border-radius: 100px;
+    font-weight: 600; text-decoration: none;
+    transition: background 0.25s, transform 0.2s;
+  }
+  .leadership-btn:hover { background: var(--color-green-light); transform: translateY(-2px); }
+  @media (max-width: 640px) { .leadership-grid { grid-template-columns: 1fr; gap: 36px; } }
+</style>

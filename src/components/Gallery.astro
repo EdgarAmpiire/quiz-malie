@@ -1,0 +1,117 @@
+---
+import { programs } from '../data/programs';
+
+const fallback = { primary: '#1A8A5A', primaryOnDark: '#28B870', deep: '#0D3B7A', accent: '#2979D8' };
+
+function rgba(hex: string, a: number) {
+  const h = hex.replace('#', '');
+  const r = parseInt(h.slice(0, 2), 16);
+  const g = parseInt(h.slice(2, 4), 16);
+  const b = parseInt(h.slice(4, 6), 16);
+  return `rgba(${r}, ${g}, ${b}, ${a})`;
+}
+
+const cards = programs.map((p, i) => {
+  const b = p.brand ?? fallback;
+  const overlay = `linear-gradient(to top, ${rgba(b.deep, 0.96)} 0%, ${rgba(b.deep, 0.55)} 42%, ${rgba(b.accent, 0.28)} 75%, transparent 100%)`;
+  return {
+    ...p,
+    href: `/programs/${p.slug}`,
+    featured: i === 0,
+    cardStyle: `--card-accent:${b.primaryOnDark}; background:${b.deep};`,
+    overlayStyle: `background:${overlay};`,
+  };
+});
+---
+<section id="gallery">
+  <div class="reveal">
+    <div class="section-label">Programs & Gallery</div>
+    <h2 class="section-title">Moments That<br /><span>Define</span> Us</h2>
+  </div>
+  <div class="events-grid">
+    {cards.map((p) => (
+      <a href={p.href} class:list={["event-card", "reveal", p.featured && "featured"]} style={p.cardStyle}>
+        <div class="event-img"><img src={p.heroImage} alt={p.title} /></div>
+        <div class="event-overlay" style={p.overlayStyle}>
+          <span class="event-date">{p.category}</span>
+          <h3 class="event-title">{p.title}</h3>
+          <p class="event-meta">{p.cardMeta}</p>
+          <span class="event-cta">View Program →</span>
+        </div>
+      </a>
+    ))}
+  </div>
+</section>
+
+<style>
+  #gallery { padding: 120px 8% 100px; background: #fff; }
+  .events-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    margin-top: 50px;
+  }
+  .event-card {
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    background: var(--color-navy);
+    text-decoration: none;
+    display: block;
+    transition: transform 0.35s, box-shadow 0.35s;
+  }
+  .event-card:hover { transform: translateY(-6px); box-shadow: 0 24px 60px rgba(13,59,122,0.18); }
+  .event-img { width: 100%; aspect-ratio: 16/9; }
+  .event-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s; }
+  .event-card:hover .event-img img { transform: scale(1.05); }
+  .event-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to top, rgba(13,59,122,0.94) 0%, rgba(13,59,122,0.15) 60%, transparent 100%);
+    padding: 28px;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+  .event-date {
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--card-accent, var(--color-green-light));
+    margin-bottom: 6px;
+  }
+  .event-title {
+    font-family: var(--font-heading);
+    font-weight: 700;
+    font-size: 1.3rem;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+    margin-bottom: 6px;
+    line-height: 1.05;
+  }
+  .event-meta { font-size: 0.82rem; color: rgba(255,255,255,0.65); }
+  .event-cta {
+    margin-top: 14px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: #fff;
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.3s, transform 0.3s;
+  }
+  .event-card:hover .event-cta { opacity: 1; transform: translateY(0); }
+
+  .event-card.featured { grid-column: span 2; }
+  .event-card.featured .event-img { aspect-ratio: 21/9; }
+  .event-card.featured .event-title { font-size: 1.9rem; }
+
+  @media (max-width: 900px) {
+    .events-grid { grid-template-columns: 1fr; }
+    .event-card.featured { grid-column: span 1; }
+    .event-card.featured .event-img { aspect-ratio: 16/9; }
+  }
+</style>

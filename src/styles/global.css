@@ -1,0 +1,75 @@
+@import "tailwindcss";
+
+@theme {
+  --color-navy: #0D3B7A;
+  --color-blue: #1565C0;
+  --color-blue-mid: #2979D8;
+  --color-green: #1A8A5A;
+  --color-green-light: #28B870;
+  --color-green-pale: #E6F5EE;
+  --color-off-white: #F5F7FA;
+  --color-light-gray: #E8ECF1;
+  --color-mid-gray: #8A9BB0;
+  --color-dark: #0A2A5E;
+  --color-text: #1C2B3A;
+  --color-text-muted: #5A7080;
+  --color-gold: #F0B429;
+
+  --font-heading: "Barlow Condensed", sans-serif;
+  --font-body: "DM Sans", sans-serif;
+  --font-serif: "Playfair Display", serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-body);
+  color: var(--color-text);
+  background: #ffffff;
+  overflow-x: hidden;
+}
+
+/* Shared section label */
+.section-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-green);
+  margin-bottom: 1rem;
+}
+.section-label::before {
+  content: '';
+  display: inline-block;
+  width: 28px; height: 2px;
+  background: var(--color-green-light);
+  border-radius: 2px;
+}
+
+/* Scroll reveal */
+.reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.75s ease, transform 0.75s ease; }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-left { opacity: 0; transform: translateX(-50px); transition: opacity 0.75s ease, transform 0.75s ease; }
+.reveal-left.visible { opacity: 1; transform: translateX(0); }
+.reveal-right { opacity: 0; transform: translateX(50px); transition: opacity 0.75s ease, transform 0.75s ease; }
+.reveal-right.visible { opacity: 1; transform: translateX(0); }
+.stagger-1 { transition-delay: 0.1s; }
+.stagger-2 { transition-delay: 0.2s; }
+.stagger-3 { transition-delay: 0.3s; }
+.stagger-4 { transition-delay: 0.4s; }
+.stagger-5 { transition-delay: 0.5s; }
+
+/* Shared section title */
+.section-title {
+  font-family: var(--font-heading);
+  font-weight: 800;
+  font-size: clamp(2.5rem, 4.5vw, 4rem);
+  line-height: 0.95;
+  text-transform: uppercase;
+  color: var(--color-navy);
+  letter-spacing: -0.01em;
+}
+.section-title span { color: var(--color-green); }

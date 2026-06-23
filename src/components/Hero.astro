@@ -78,11 +78,12 @@
     position: absolute;
     inset: 0;
     opacity: 0;
+    pointer-events: none;
     transition: opacity 1.2s ease;
     background-size: cover;
     background-position: center;
   }
-  .hero-slide.active { opacity: 1; }
+  .hero-slide.active { opacity: 1; pointer-events: auto; }
   .hero-slide::after {
     content: '';
     position: absolute;

@@ -137,7 +137,7 @@ export const programs: Program[] = [
       deep: '#0064B4',
       accent: '#28B43C',
     },
-    heroImage: 'https://images.unsplash.com/photo-1576765608535-5f04d1e3f289?w=1600&q=85',
+    heroImage: '/programs/the-doc-talk-show/hero.jpeg',
     intro: [
       "The Doc Talk Show is one of Uganda's leading health television programs, produced by Quiz Malie Studios and broadcast on the Uganda Broadcasting Corporation (UBC) network. The program was established to bridge the gap between healthcare professionals and the public by providing accurate, accessible, and life-saving health information to Ugandans and audiences across Africa.",
       "The show's primary mission is to educate communities about disease prevention, health promotion, first aid, and healthy living. Through expert discussions, public health campaigns, and medical education, it empowers people with knowledge that helps save lives and improve health outcomes.",
@@ -174,6 +174,39 @@ export const programs: Program[] = [
       'Partnered with the Ministry of Health, NDA, Makerere University School of Public Health, and the WHO.',
     ],
     youtube: 'https://www.youtube.com/watch?v=ODtiOq7TtjQ&list=PLoPqBk_KNOuWWGHjyKfRQCOMV-eRfMmcN',
+    gallery: [
+      placeholder('photo-1576765608535-5f04d1e3f289', 'Health education segment'),
+      placeholder('photo-1631217868264-e5b90bb7e133', 'Medical professional'),
+      placeholder('photo-1505751172876-fa1923c5c528', 'Doctor on set'),
+      placeholder('photo-1538108149393-fbbd81895907', 'Health campaign'),
+      placeholder('photo-1584515933487-779824d29309', 'Studio recording'),
+      placeholder('photo-1579684385127-1ef15d508118', 'Community health'),
+    ],
+  },
+  {
+    slug: 'international-debate',
+    title: 'International Debate',
+    category: 'Competitive Debate',
+    cardMeta: 'Cross-border debate competitions',
+    tagline: 'Where Uganda’s finest minds meet the world stage.',
+    heroImage: '/programs/international-debate/hero.jpeg',
+    brand: {
+      primary: '#6D28A8',       // purple
+      primaryOnDark: '#A971E0',
+      deep: '#3F1A66',          // deep purple (hero base, buttons)
+      accent: '#E0A526',        // gold accent
+    },
+    intro: [
+      'PLACEHOLDER: Write a 2–3 sentence introduction to the International Debate program here — what it is, who takes part, and why it matters.',
+      'PLACEHOLDER: A second paragraph with more detail — the history of Uganda’s participation, partner countries, notable achievements, etc.',
+    ],
+    mission: 'PLACEHOLDER: One sentence describing the mission of the International Debate program.',
+    vision: 'PLACEHOLDER: One sentence describing the vision of the International Debate program.',
+    impact: [
+      'PLACEHOLDER: First key impact or achievement (e.g. number of countries competed against).',
+      'PLACEHOLDER: Second key impact (e.g. students who have represented Uganda internationally).',
+      'PLACEHOLDER: Third key impact (e.g. awards or rankings earned).',
+    ],
     gallery: [
       placeholder('photo-1576765608535-5f04d1e3f289', 'Health education segment'),
       placeholder('photo-1631217868264-e5b90bb7e133', 'Medical professional'),

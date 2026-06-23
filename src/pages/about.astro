@@ -4,17 +4,19 @@ import Navbar from '../components/Navbar.astro';
 import Footer from '../components/Footer.astro';
 
 const team = [
-  { name: 'Damalie Patra Achan', title: 'Chief Executive Officer', img: 'https://i.pravatar.cc/500?img=12' },
-  { name: 'Maxencia Nanjura ', title: 'Head Projects', img: 'https://i.pravatar.cc/500?img=32' },
-  { name: 'Aaron Tumukunde', title: 'Operations Manager', img: 'https://i.pravatar.cc/500?img=5' },
-  { name: 'Kenneth Baguma ', title: 'Creative Director/Human Resources Manager', img: 'https://i.pravatar.cc/500?img=45' },
-  { name: 'Kisitu Robert ', title: 'Head of Production', img: 'https://i.pravatar.cc/500?img=14' },
-  { name: 'Joel N Mungai', title: 'Lead Graphics/Branding Division', img: 'https://i.pravatar.cc/500?img=25' },
-  { name: 'Ramathan K', title: 'Specialist, Motion & Sound Effects', img: 'https://i.pravatar.cc/500?img=60' },
-  { name: 'Comfort Ndagire ', title: 'Project Lead, High School Crossfire', img: 'https://i.pravatar.cc/500?img=8' },
-  { name: 'Arnold Negule', title: 'Project Lead, High School Crossfire & Face to Face School Quiz', img: 'https://i.pravatar.cc/500?img=51' },
-  { name: 'Dr. Darius Owachi', title: 'Producer, The Doctalk Show', img: 'https://i.pravatar.cc/500?img=33' },
-  { name: 'Dr. Francis Kanyike', title: 'Producer, Obulamu Bwo Show', img: 'https://i.pravatar.cc/500?img=33' },
+  { name: 'Damalie Patra Achan', title: 'Chief Executive Officer', img: '/team/damalie.jpeg' },
+  { name: 'Aaron Tumukunde', title: 'Operations Manager', img: '/team/aaron.jpeg' },
+  { name: 'Kenneth Baguma ', title: 'Creative Director/Human Resources Manager', img: '' },
+  { name: 'Jonathan Areeba', title: 'Adjudicator & Trainer Crossfire', img: '' },
+  { name: 'Joel N Mungai', title: 'Lead Graphics/Branding Division', img: '' },
+  { name: 'Ramathan K', title: 'Specialist, Motion & Sound Effects', img: '' },
+  { name: 'Joshua Olega', title: 'Adjudicator/Ass. Project Coordinator & Trainer Crossfire', img: '/team/olega.jpeg' },
+  { name: 'Linda Kakayi', title: 'Project Coordinator/Adjuducator Crossfire', img: '' },
+  { name: 'Mubiru John Bosco', title: 'Adjudicator & Trainer Crossfire', img: '/team/mubiru.jpeg' },
+  { name: 'Dr. Francis Kanyike', title: 'Producer, Obulamu Bwo Show', img: '' },
+  { name: 'Nakabira Abigeal', title: 'Adjudicator & Trainer Crossfire', img: '' },
+  { name: 'Ruben Omara', title: 'Adjudicator & Trainer Crossfire', img: '' },
+  { name: 'Solomon Mbiira Mwesigwa', title: 'Adjudicator & Trainer Crossfire', img: '/team/solo.jpeg' },
 ];
 ---
 <Layout title="About Us — Quiz Malie Uganda Limited">
@@ -65,7 +67,14 @@ const team = [
     <div class="team-grid">
       {team.map((member) => (
         <div class="team-card reveal">
-          <div class="team-photo"><img src={member.img} alt={member.name} loading="lazy" /></div>
+          <div class="team-photo">
+            <img
+              src={member.img || '/team/avatar.svg'}
+              alt={member.name}
+              loading="lazy"
+              onerror="this.onerror=null; this.src='/team/avatar.svg';"
+            />
+        </div>
           <h3 class="team-name">{member.name}</h3>
           <p class="team-role">{member.title}</p>
         </div>

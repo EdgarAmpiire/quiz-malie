@@ -1,37 +1,50 @@
 ---
-import Layout from '../../layouts/Layout.astro';
-import Navbar from '../../components/Navbar.astro';
-import Footer from '../../components/Footer.astro';
-import { programs } from '../../data/programs';
-import fs from 'node:fs';
-import path from 'node:path';
+import Layout from "../../layouts/Layout.astro";
+import Navbar from "../../components/Navbar.astro";
+import Footer from "../../components/Footer.astro";
+import { programs } from "../../data/programs";
+import fs from "node:fs";
+import path from "node:path";
 
 export function getStaticPaths() {
-  return programs.map((p) => ({ params: { slug: p.slug }, props: { program: p } }));
+  return programs.map((p) => ({
+    params: { slug: p.slug },
+    props: { program: p },
+  }));
 }
 const { program } = Astro.props;
 
 // Year-organized gallery from public/programs/<slug>/<year>/
-const galDir = path.join(process.cwd(), 'public', 'programs', program.slug);
+const galDir = path.join(process.cwd(), "public", "programs", program.slug);
 const imgRe = /\.(jpe?g|png|webp|avif|gif)$/i;
-const numeric = (a: string, b: string) => a.localeCompare(b, undefined, { numeric: true });
+const numeric = (a: string, b: string) =>
+  a.localeCompare(b, undefined, { numeric: true });
+const enc = (s: string) => s.split("/").map(encodeURIComponent).join("/");
 
-let galleryYears: { year: string; photos: { src: string; alt: string }[] }[] = [];
+let galleryYears: { year: string; photos: { src: string; alt: string }[] }[] =
+  [];
 try {
-  const entries = fs.readdirSync(galDir, { withFileTypes: true });
-  const yearDirs = entries
-    .filter((e) => e.isDirectory() && /^\d{4}$/.test(e.name))
-    .map((e) => e.name)
-    .sort((a, b) => Number(b) - Number(a)); // newest first
+  const dirs = fs
+    .readdirSync(galDir, { withFileTypes: true })
+    .filter((e) => e.isDirectory())
+    .map((e) => e.name);
+  const years = dirs
+    .filter((d) => /^\d{4}$/.test(d))
+    .sort((a, b) => Number(b) - Number(a));
+  const named = dirs.filter((d) => !/^\d{4}$/.test(d)).sort(numeric);
+  const ordered = [...years, ...named]; // years newest-first, then named folders
 
-  galleryYears = yearDirs
-    .map((year) => {
-      const files = fs.readdirSync(path.join(galDir, year)).filter((f) => imgRe.test(f)).sort(numeric);
+  galleryYears = ordered
+    .map((folder) => {
+      const files = fs
+        .readdirSync(path.join(galDir, folder))
+        .filter((f) => imgRe.test(f))
+        .sort(numeric);
       return {
-        year,
+        year: folder,
         photos: files.map((f, i) => ({
-          src: `/programs/${program.slug}/${year}/${f}`,
-          alt: `${program.title} ${year} — photo ${i + 1}`,
+          src: `/programs/${program.slug}/${enc(folder)}/${encodeURIComponent(f)}`,
+          alt: `${program.title} ${folder} — photo ${i + 1}`,
         })),
       };
     })
@@ -41,11 +54,16 @@ try {
 }
 
 // Brand palette (falls back to the site's colors for programs without a brand)
-const fallback = { primary: '#1A8A5A', primaryOnDark: '#28B870', deep: '#0D3B7A', accent: '#2979D8' };
+const fallback = {
+  primary: "#1A8A5A",
+  primaryOnDark: "#28B870",
+  deep: "#0D3B7A",
+  accent: "#2979D8",
+};
 const brand = program.brand ?? fallback;
 
 function rgba(hex: string, a: number) {
-  const h = hex.replace('#', '');
+  const h = hex.replace("#", "");
   const r = parseInt(h.slice(0, 2), 16);
   const g = parseInt(h.slice(2, 4), 16);
   const b = parseInt(h.slice(4, 6), 16);
@@ -58,23 +76,34 @@ const brandVars = `--bp:${brand.primary}; --bp-d:${brand.primaryOnDark}; --bd:${
 let yt = null;
 if (program.youtube) {
   const u = new URL(program.youtube);
-  const v = u.searchParams.get('v');
-  const list = u.searchParams.get('list');
+  const v = u.searchParams.get("v");
+  const list = u.searchParams.get("list");
   yt = {
     embed: `https://www.youtube-nocookie.com/embed/${v}?list=${list}`,
-    playlist: list ? `https://www.youtube.com/playlist?list=${list}` : program.youtube,
+    playlist: list
+      ? `https://www.youtube.com/playlist?list=${list}`
+      : program.youtube,
   };
 }
 ---
+
 <Layout title={`${program.title} — Quiz Malie`}>
   <Navbar />
 
   <article style={brandVars}>
     <header class="program-hero">
-      <div class="program-hero-bg" style={`background-image: ${heroOverlay}, url('${program.heroImage}')`}></div>
+      <div
+        class="program-hero-bg"
+        style={`background-image: ${heroOverlay}, url('${program.heroImage}')`}
+      >
+      </div>
       <div class="program-hero-inner">
         <a href="/#gallery" class="back-link">← Back to Programs</a>
-        {program.logo && <img src={program.logo} alt={program.title} class="program-logo" />}
+        {
+          program.logo && (
+            <img src={program.logo} alt={program.title} class="program-logo" />
+          )
+        }
         <span class="program-cat">{program.category}</span>
         <h1>{program.title}</h1>
         <p class="program-sub">{program.cardMeta}</p>
@@ -86,18 +115,26 @@ if (program.youtube) {
         {program.intro.map((para) => <p>{para}</p>)}
       </div>
 
-      {program.sections?.map((s) => (
-        <section class="program-section reveal">
-          {s.heading && <h2 class="program-h2">{s.heading}</h2>}
-          {s.body?.map((p) => <p>{p}</p>)}
-          {s.bullets && (
-            <ul class="bullet-list">
-              {s.bullets.map((b) => <li>{b}</li>)}
-            </ul>
-          )}
-          {s.afterBullets?.map((p) => <p>{p}</p>)}
-        </section>
-      ))}
+      {
+        program.sections?.map((s) => (
+          <section class="program-section reveal">
+            {s.heading && <h2 class="program-h2">{s.heading}</h2>}
+            {s.body?.map((p) => (
+              <p>{p}</p>
+            ))}
+            {s.bullets && (
+              <ul class="bullet-list">
+                {s.bullets.map((b) => (
+                  <li>{b}</li>
+                ))}
+              </ul>
+            )}
+            {s.afterBullets?.map((p) => (
+              <p>{p}</p>
+            ))}
+          </section>
+        ))
+      }
 
       <div class="program-mv reveal">
         <div class="pmv mission">
@@ -117,69 +154,110 @@ if (program.youtube) {
         </ul>
       </section>
 
-      {program.registration && (
-        <section class="program-register reveal">
-          <h2 class="program-h2">Registration <span>Now Open</span></h2>
-          {program.registration.map((p) => <p>{p}</p>)}
-          <a href="/#contact" class="register-btn">Register Now</a>
-        </section>
-      )}
+      {
+        program.registration && (
+          <section class="program-register reveal">
+            <h2 class="program-h2">
+              Registration <span>Now Open</span>
+            </h2>
+            {program.registration.map((p) => (
+              <p>{p}</p>
+            ))}
+            <a href="/#contact" class="register-btn">
+              Register Now
+            </a>
+          </section>
+        )
+      }
 
       <div class="program-tagline reveal">
         <p>{program.tagline}</p>
       </div>
     </div>
 
-    {yt && (
-      <section class="program-watch reveal">
-        <div class="watch-head">
-          <div class="section-label">Watch &amp; Learn</div>
-          <h2 class="program-h2">Catch the <span>Episodes</span></h2>
-          <p class="watch-sub">Relive the action and see it for yourself — full episodes are streaming now on our YouTube channel.</p>
-        </div>
-        <div class="watch-player">
-          <iframe src={yt.embed} title={`${program.title} on YouTube`} allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen loading="lazy"></iframe>
-        </div>
-        <a href={yt.playlist} target="_blank" rel="noopener" class="watch-btn">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-          View Full Playlist on YouTube
-        </a>
-      </section>
-    )}
-
-   
-      {galleryYears.length > 0 && (
-      <section class="pg-section reveal">
-        <div class="pg-head">
-          <div>
-            <div class="section-label">Gallery</div>
-            <h2 class="section-title">Through the <span>Years</span></h2>
+    {
+      yt && (
+        <section class="program-watch reveal">
+          <div class="watch-head">
+            <div class="section-label">Watch &amp; Learn</div>
+            <h2 class="program-h2">
+              Catch the <span>Episodes</span>
+            </h2>
+            <p class="watch-sub">
+              Relive the action and see it for yourself — full episodes are
+              streaming now on our YouTube channel.
+            </p>
           </div>
-          <div class="pg-year-wrap">
-            <label for="pgYear" class="pg-year-label">Year</label>
-            <select id="pgYear" class="pg-year-select">
-              {galleryYears.map((y, i) => (
-                <option value={y.year} selected={i === 0}>{y.year}</option>
+          <div class="watch-player">
+            <iframe
+              src={yt.embed}
+              title={`${program.title} on YouTube`}
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              allowfullscreen
+              loading="lazy"
+            />
+          </div>
+          <a
+            href={yt.playlist}
+            target="_blank"
+            rel="noopener"
+            class="watch-btn"
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M8 5v14l11-7z" />
+            </svg>
+            View Full Playlist on YouTube
+          </a>
+        </section>
+      )
+    }
+
+    {
+      galleryYears.length > 0 && (
+        <section class="pg-section reveal">
+          <div class="pg-head">
+            <div>
+              <div class="section-label">Gallery</div>
+              <h2 class="section-title">
+                Through the <span>Years</span>
+              </h2>
+            </div>
+            <div class="pg-year-wrap">
+              <label for="pgYear" class="pg-year-label">
+                Year
+              </label>
+              <select id="pgYear" class="pg-year-select">
+                {galleryYears.map((y, i) => (
+                  <option value={y.year} selected={i === 0}>
+                    {y.year}
+                  </option>
+                ))}
+              </select>
+            </div>
+          </div>
+
+          {galleryYears.map((y, i) => (
+            <div class="pg-grid pg-panel" data-year={y.year} hidden={i !== 0}>
+              {y.photos.map((img) => (
+                <div class="pg-item">
+                  <img src={img.src} alt={img.alt} loading="lazy" />
+                </div>
               ))}
-            </select>
-          </div>
-        </div>
-
-        {galleryYears.map((y, i) => (
-          <div class="pg-grid pg-panel" data-year={y.year} hidden={i !== 0}>
-            {y.photos.map((img) => (
-              <div class="pg-item"><img src={img.src} alt={img.alt} loading="lazy" /></div>
-            ))}
-          </div>
-        ))}
-      </section>
-    )}
+            </div>
+          ))}
+        </section>
+      )
+    }
 
     <div class="lightbox" id="lightbox" aria-hidden="true">
       <button class="lb-close" id="lbClose" aria-label="Close">&times;</button>
-      <button class="lb-nav lb-prev" id="lbPrev" aria-label="Previous">&#8249;</button>
+      <button class="lb-nav lb-prev" id="lbPrev" aria-label="Previous"
+        >&#8249;</button
+      >
       <img class="lb-img" id="lbImg" src="" alt="" />
-      <button class="lb-nav lb-next" id="lbNext" aria-label="Next">&#8250;</button>
+      <button class="lb-nav lb-next" id="lbNext" aria-label="Next"
+        >&#8250;</button
+      >
     </div>
   </article>
 
@@ -187,7 +265,9 @@ if (program.youtube) {
 </Layout>
 
 <style>
-  article { color: var(--color-text); }
+  article {
+    color: var(--color-text);
+  }
 
   /* Hero */
   .program-hero {
@@ -198,8 +278,17 @@ if (program.youtube) {
     padding: 130px 8% 60px;
     overflow: hidden;
   }
-  .program-hero-bg { position: absolute; inset: 0; background-size: cover; background-position: center; }
-  .program-hero-inner { position: relative; z-index: 2; max-width: 900px; }
+  .program-hero-bg {
+    position: absolute;
+    inset: 0;
+    background-size: cover;
+    background-position: center;
+  }
+  .program-hero-inner {
+    position: relative;
+    z-index: 2;
+    max-width: 900px;
+  }
   .program-logo {
     height: clamp(130px, 16vw, 200px);
     width: auto;
@@ -207,25 +296,32 @@ if (program.youtube) {
     object-fit: contain;
     display: block;
     margin-bottom: 1.4rem;
-    filter: drop-shadow(0 6px 20px rgba(0,0,0,0.45));
+    filter: drop-shadow(0 6px 20px rgba(0, 0, 0, 0.45));
   }
   .back-link {
     display: inline-flex;
     align-items: center;
     gap: 6px;
     margin-bottom: 1.1rem;
-    color: rgba(255,255,255,0.9);
+    color: rgba(255, 255, 255, 0.9);
     font-weight: 600;
     font-size: 0.9rem;
     text-decoration: none;
     padding: 8px 16px;
-    border: 1px solid rgba(255,255,255,0.35);
+    border: 1px solid rgba(255, 255, 255, 0.35);
     border-radius: 100px;
-    background: rgba(255,255,255,0.08);
+    background: rgba(255, 255, 255, 0.08);
     backdrop-filter: blur(4px);
-    transition: background 0.25s, border-color 0.25s, transform 0.2s;
+    transition:
+      background 0.25s,
+      border-color 0.25s,
+      transform 0.2s;
   }
-  .back-link:hover { background: rgba(255,255,255,0.2); border-color: #fff; transform: translateX(-3px); }
+  .back-link:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: #fff;
+    transform: translateX(-3px);
+  }
   .program-cat {
     display: inline-block;
     font-size: 0.8rem;
@@ -244,10 +340,19 @@ if (program.youtube) {
     color: #fff;
     letter-spacing: -0.01em;
   }
-  .program-sub { margin-top: 1rem; color: rgba(255,255,255,0.7); font-size: 0.95rem; }
+  .program-sub {
+    margin-top: 1rem;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.95rem;
+  }
 
   /* Body */
-  .program-body { width: 80%; max-width: 1360px; margin: 0 auto; padding: 80px 0; }
+  .program-body {
+    width: 80%;
+    max-width: 1360px;
+    margin: 0 auto;
+    padding: 80px 0;
+  }
   .program-h2 {
     font-family: var(--font-heading);
     font-weight: 800;
@@ -258,7 +363,9 @@ if (program.youtube) {
     margin-bottom: 1.2rem;
     line-height: 1;
   }
-  .program-h2 span { color: var(--bp); }
+  .program-h2 span {
+    color: var(--bp);
+  }
   .program-body p {
     font-size: 1.02rem;
     color: var(--color-text-muted);
@@ -267,8 +374,13 @@ if (program.youtube) {
     margin-bottom: 1.2rem;
   }
 
-  .program-section { margin-top: 48px; }
-  .bullet-list { list-style: none; margin: 0.5rem 0 1.2rem; }
+  .program-section {
+    margin-top: 48px;
+  }
+  .bullet-list {
+    list-style: none;
+    margin: 0.5rem 0 1.2rem;
+  }
   .bullet-list li {
     position: relative;
     padding-left: 28px;
@@ -278,10 +390,12 @@ if (program.youtube) {
     line-height: 1.6;
   }
   .bullet-list li::before {
-    content: '';
+    content: "";
     position: absolute;
-    left: 0; top: 9px;
-    width: 8px; height: 8px;
+    left: 0;
+    top: 9px;
+    width: 8px;
+    height: 8px;
     background: var(--bp);
     border-radius: 50%;
   }
@@ -299,8 +413,12 @@ if (program.youtube) {
     border: 1px solid var(--color-light-gray);
     background: var(--color-off-white);
   }
-  .pmv.mission { border-top: 3px solid var(--bd); }
-  .pmv.vision { border-top: 3px solid var(--ba); }
+  .pmv.mission {
+    border-top: 3px solid var(--bd);
+  }
+  .pmv.vision {
+    border-top: 3px solid var(--ba);
+  }
   .pmv h3 {
     font-family: var(--font-heading);
     font-weight: 800;
@@ -310,10 +428,14 @@ if (program.youtube) {
     margin-bottom: 0.6rem;
     letter-spacing: 0.02em;
   }
-  .pmv p { margin-bottom: 0; }
+  .pmv p {
+    margin-bottom: 0;
+  }
 
   /* Impact */
-  .program-impact { margin-top: 48px; }
+  .program-impact {
+    margin-top: 48px;
+  }
   .impact-list {
     list-style: none;
     display: grid;
@@ -328,9 +450,10 @@ if (program.youtube) {
     line-height: 1.5;
   }
   .impact-list li::before {
-    content: '✓';
+    content: "✓";
     position: absolute;
-    left: 0; top: 0;
+    left: 0;
+    top: 0;
     color: var(--bp);
     font-weight: 800;
   }
@@ -353,12 +476,20 @@ if (program.youtube) {
     border-radius: 8px;
     font-weight: 600;
     font-size: 0.95rem;
-    transition: filter 0.25s, transform 0.2s;
+    transition:
+      filter 0.25s,
+      transform 0.2s;
   }
-  .register-btn:hover { filter: brightness(0.9); transform: translateY(-2px); }
+  .register-btn:hover {
+    filter: brightness(0.9);
+    transform: translateY(-2px);
+  }
 
   /* Tagline */
-  .program-tagline { margin-top: 56px; text-align: center; }
+  .program-tagline {
+    margin-top: 56px;
+    text-align: center;
+  }
   .program-tagline p {
     font-family: var(--font-heading);
     font-weight: 700;
@@ -370,7 +501,9 @@ if (program.youtube) {
   }
 
   /* Gallery */
-  .program-gallery { padding: 40px 8% 120px; }
+  .program-gallery {
+    padding: 40px 8% 120px;
+  }
   .gallery-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -383,12 +516,25 @@ if (program.youtube) {
     overflow: hidden;
     aspect-ratio: 4/3;
   }
-  .gallery-grid img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s; }
-  .gallery-grid figure:hover img { transform: scale(1.06); }
+  .gallery-grid img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s;
+  }
+  .gallery-grid figure:hover img {
+    transform: scale(1.06);
+  }
 
   @media (max-width: 768px) {
-    .program-mv, .impact-list { grid-template-columns: 1fr; }
-    .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    .program-mv,
+    .impact-list {
+      grid-template-columns: 1fr;
+    }
+    .gallery-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
   }
 
   /* Hero watch button */
@@ -397,8 +543,8 @@ if (program.youtube) {
     align-items: center;
     gap: 9px;
     margin-top: 1.4rem;
-    background: rgba(255,255,255,0.14);
-    border: 1.5px solid rgba(255,255,255,0.5);
+    background: rgba(255, 255, 255, 0.14);
+    border: 1.5px solid rgba(255, 255, 255, 0.5);
     color: #fff;
     padding: 11px 22px;
     border-radius: 100px;
@@ -406,14 +552,32 @@ if (program.youtube) {
     font-size: 0.9rem;
     text-decoration: none;
     backdrop-filter: blur(4px);
-    transition: background 0.25s, border-color 0.25s, transform 0.2s;
+    transition:
+      background 0.25s,
+      border-color 0.25s,
+      transform 0.2s;
   }
-  .hero-watch-btn:hover { background: rgba(255,255,255,0.24); border-color: #fff; transform: translateY(-2px); }
+  .hero-watch-btn:hover {
+    background: rgba(255, 255, 255, 0.24);
+    border-color: #fff;
+    transform: translateY(-2px);
+  }
 
   /* Watch section */
-  .program-watch { width: 80%; max-width: 1360px; margin: 0 auto; padding: 40px 0 24px; text-align: center; }
-  .watch-head { margin-bottom: 34px; }
-  .watch-head .section-label { color: var(--bp); justify-content: center; }
+  .program-watch {
+    width: 80%;
+    max-width: 1360px;
+    margin: 0 auto;
+    padding: 40px 0 24px;
+    text-align: center;
+  }
+  .watch-head {
+    margin-bottom: 34px;
+  }
+  .watch-head .section-label {
+    color: var(--bp);
+    justify-content: center;
+  }
   .watch-sub {
     max-width: 620px;
     margin: 0.8rem auto 0;
@@ -427,103 +591,273 @@ if (program.youtube) {
     aspect-ratio: 16/9;
     border-radius: 16px;
     overflow: hidden;
-    box-shadow: 0 20px 50px rgba(13,59,122,0.18);
+    box-shadow: 0 20px 50px rgba(13, 59, 122, 0.18);
     background: #000;
   }
-  .watch-player iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  .watch-player iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
   .watch-btn {
     display: inline-flex;
     align-items: center;
     gap: 10px;
     margin-top: 28px;
-    background: #FF0000;
+    background: #ff0000;
     color: #fff;
     padding: 14px 28px;
     border-radius: 8px;
     font-weight: 600;
     font-size: 0.95rem;
     text-decoration: none;
-    transition: filter 0.25s, transform 0.2s;
+    transition:
+      filter 0.25s,
+      transform 0.2s;
   }
-  .watch-btn:hover { filter: brightness(0.92); transform: translateY(-2px); }
+  .watch-btn:hover {
+    filter: brightness(0.92);
+    transform: translateY(-2px);
+  }
 
-  .pg-section { width: 80%; max-width: 1360px; margin: 0 auto; padding: 80px 0 110px; }
-  .pg-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin-bottom: 40px; }
-  .pg-year-wrap { display: flex; align-items: center; gap: 10px; }
-  .pg-year-label { font-family: var(--font-heading); text-transform: uppercase; letter-spacing: 0.08em; font-size: 0.8rem; font-weight: 700; color: var(--color-text-muted); }
+  .pg-section {
+    width: 80%;
+    max-width: 1360px;
+    margin: 0 auto;
+    padding: 80px 0 110px;
+  }
+  .pg-head {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+    margin-bottom: 40px;
+  }
+  .pg-year-wrap {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .pg-year-label {
+    font-family: var(--font-heading);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--color-text-muted);
+  }
   .pg-year-select {
-    appearance: none; -webkit-appearance: none;
-    font-family: var(--font-body); font-weight: 600; font-size: 1rem;
-    color: #fff; background-color: var(--color-navy);
-    border: none; border-radius: 100px; padding: 12px 44px 12px 22px; cursor: pointer;
+    appearance: none;
+    -webkit-appearance: none;
+    font-family: var(--font-body);
+    font-weight: 600;
+    font-size: 1rem;
+    color: #fff;
+    background-color: var(--color-navy);
+    border: none;
+    border-radius: 100px;
+    padding: 12px 44px 12px 22px;
+    cursor: pointer;
     background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='3'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E");
-    background-repeat: no-repeat; background-position: right 18px center;
+    background-repeat: no-repeat;
+    background-position: right 18px center;
     transition: background-color 0.25s;
   }
-  .pg-year-select:hover { background-color: var(--color-blue); }
+  .pg-year-select:hover {
+    background-color: var(--color-blue);
+  }
 
-  .pg-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
-  .pg-item { aspect-ratio: 4/3; border-radius: 14px; overflow: hidden; box-shadow: 0 10px 30px rgba(13,59,122,0.10); cursor: pointer; }
-  .pg-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s ease; }
-  .pg-item:hover img { transform: scale(1.06); }
-  @media (max-width: 900px) { .pg-section { width: 88%; } .pg-grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 560px) { .pg-grid { grid-template-columns: 1fr; } }
+  .pg-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+  }
+  .pg-item {
+    aspect-ratio: 4/3;
+    border-radius: 14px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(13, 59, 122, 0.1);
+    cursor: pointer;
+  }
+  .pg-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.5s ease;
+  }
+  .pg-item:hover img {
+    transform: scale(1.06);
+  }
+  @media (max-width: 900px) {
+    .pg-section {
+      width: 88%;
+    }
+    .pg-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media (max-width: 560px) {
+    .pg-grid {
+      grid-template-columns: 1fr;
+    }
+  }
 
   /* Lightbox */
-  .lightbox { position: fixed; inset: 0; z-index: 2000; background: rgba(8,16,28,0.92); backdrop-filter: blur(4px); display: flex; align-items: center; justify-content: center; padding: 4vh 4vw; opacity: 0; visibility: hidden; transition: opacity 0.3s ease, visibility 0.3s; }
-  .lightbox.open { opacity: 1; visibility: visible; }
-  .lb-img { max-width: 92vw; max-height: 88vh; object-fit: contain; border-radius: 8px; box-shadow: 0 30px 80px rgba(0,0,0,0.5); transform: scale(0.96); transition: transform 0.3s ease; }
-  .lightbox.open .lb-img { transform: scale(1); }
-  .lb-close, .lb-nav { position: absolute; background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25); color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background 0.2s; }
-  .lb-close:hover, .lb-nav:hover { background: rgba(255,255,255,0.28); }
-  .lb-close { top: 20px; right: 24px; width: 46px; height: 46px; border-radius: 50%; font-size: 1.8rem; line-height: 1; }
-  .lb-nav { top: 50%; transform: translateY(-50%); width: 52px; height: 52px; border-radius: 50%; font-size: 2rem; }
-  .lb-prev { left: 20px; }
-  .lb-next { right: 20px; }
-  @media (max-width: 600px) { .lb-nav { width: 42px; height: 42px; font-size: 1.6rem; } .lb-prev { left: 8px; } .lb-next { right: 8px; } .lb-close { top: 12px; right: 12px; } }
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 2000;
+    background: rgba(8, 16, 28, 0.92);
+    backdrop-filter: blur(4px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 4vh 4vw;
+    opacity: 0;
+    visibility: hidden;
+    transition:
+      opacity 0.3s ease,
+      visibility 0.3s;
+  }
+  .lightbox.open {
+    opacity: 1;
+    visibility: visible;
+  }
+  .lb-img {
+    max-width: 92vw;
+    max-height: 88vh;
+    object-fit: contain;
+    border-radius: 8px;
+    box-shadow: 0 30px 80px rgba(0, 0, 0, 0.5);
+    transform: scale(0.96);
+    transition: transform 0.3s ease;
+  }
+  .lightbox.open .lb-img {
+    transform: scale(1);
+  }
+  .lb-close,
+  .lb-nav {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.12);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+  }
+  .lb-close:hover,
+  .lb-nav:hover {
+    background: rgba(255, 255, 255, 0.28);
+  }
+  .lb-close {
+    top: 20px;
+    right: 24px;
+    width: 46px;
+    height: 46px;
+    border-radius: 50%;
+    font-size: 1.8rem;
+    line-height: 1;
+  }
+  .lb-nav {
+    top: 50%;
+    transform: translateY(-50%);
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    font-size: 2rem;
+  }
+  .lb-prev {
+    left: 20px;
+  }
+  .lb-next {
+    right: 20px;
+  }
+  @media (max-width: 600px) {
+    .lb-nav {
+      width: 42px;
+      height: 42px;
+      font-size: 1.6rem;
+    }
+    .lb-prev {
+      left: 8px;
+    }
+    .lb-next {
+      right: 8px;
+    }
+    .lb-close {
+      top: 12px;
+      right: 12px;
+    }
+  }
 </style>
 
 <script>
-  const sel = document.getElementById('pgYear') as HTMLSelectElement | null;
-  const panels = Array.from(document.querySelectorAll('.pg-panel')) as HTMLElement[];
-  sel?.addEventListener('change', () => {
-    panels.forEach((p) => { p.hidden = p.dataset.year !== sel.value; });
+  const sel = document.getElementById("pgYear") as HTMLSelectElement | null;
+  const panels = Array.from(
+    document.querySelectorAll(".pg-panel"),
+  ) as HTMLElement[];
+  sel?.addEventListener("change", () => {
+    panels.forEach((p) => {
+      p.hidden = p.dataset.year !== sel.value;
+    });
   });
 
-  const lb = document.getElementById('lightbox');
-  const lbImg = document.getElementById('lbImg') as HTMLImageElement;
+  const lb = document.getElementById("lightbox");
+  const lbImg = document.getElementById("lbImg") as HTMLImageElement;
   let imgs: HTMLImageElement[] = [];
   let idx = 0;
 
   function activeImgs() {
     const panel = panels.find((p) => !p.hidden);
-    return panel ? (Array.from(panel.querySelectorAll('img')) as HTMLImageElement[]) : [];
+    return panel
+      ? (Array.from(panel.querySelectorAll("img")) as HTMLImageElement[])
+      : [];
   }
   function show(i: number) {
     idx = (i + imgs.length) % imgs.length;
-    lbImg.src = imgs[idx].getAttribute('src') || '';
-    lbImg.alt = imgs[idx].getAttribute('alt') || '';
+    lbImg.src = imgs[idx].getAttribute("src") || "";
+    lbImg.alt = imgs[idx].getAttribute("alt") || "";
   }
   function openAt(target: HTMLImageElement) {
     imgs = activeImgs();
     idx = Math.max(0, imgs.indexOf(target));
     show(idx);
-    lb?.classList.add('open'); lb?.setAttribute('aria-hidden', 'false');
-    document.body.style.overflow = 'hidden';
+    lb?.classList.add("open");
+    lb?.setAttribute("aria-hidden", "false");
+    document.body.style.overflow = "hidden";
   }
   function close() {
-    lb?.classList.remove('open'); lb?.setAttribute('aria-hidden', 'true');
-    document.body.style.overflow = '';
+    lb?.classList.remove("open");
+    lb?.setAttribute("aria-hidden", "true");
+    document.body.style.overflow = "";
   }
-  document.querySelectorAll('.pg-item img').forEach((img) => img.addEventListener('click', () => openAt(img as HTMLImageElement)));
-  document.getElementById('lbClose')?.addEventListener('click', close);
-  document.getElementById('lbPrev')?.addEventListener('click', (e) => { e.stopPropagation(); show(idx - 1); });
-  document.getElementById('lbNext')?.addEventListener('click', (e) => { e.stopPropagation(); show(idx + 1); });
-  lb?.addEventListener('click', (e) => { if (e.target === lb) close(); });
-  document.addEventListener('keydown', (e) => {
-    if (!lb?.classList.contains('open')) return;
-    if (e.key === 'Escape') close();
-    if (e.key === 'ArrowLeft') show(idx - 1);
-    if (e.key === 'ArrowRight') show(idx + 1);
+  document
+    .querySelectorAll(".pg-item img")
+    .forEach((img) =>
+      img.addEventListener("click", () => openAt(img as HTMLImageElement)),
+    );
+  document.getElementById("lbClose")?.addEventListener("click", close);
+  document.getElementById("lbPrev")?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    show(idx - 1);
+  });
+  document.getElementById("lbNext")?.addEventListener("click", (e) => {
+    e.stopPropagation();
+    show(idx + 1);
+  });
+  lb?.addEventListener("click", (e) => {
+    if (e.target === lb) close();
+  });
+  document.addEventListener("keydown", (e) => {
+    if (!lb?.classList.contains("open")) return;
+    if (e.key === "Escape") close();
+    if (e.key === "ArrowLeft") show(idx - 1);
+    if (e.key === "ArrowRight") show(idx + 1);
   });
 </script>

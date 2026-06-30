@@ -97,11 +97,9 @@ if (program.youtube) {
             <img src={program.logo} alt={program.title} class="program-logo" />
           )
         }
-        <div class="hero-text-card">
-          <span class="program-cat">{program.category}</span>
-          <h1>{program.title}</h1>
-          <p class="program-sub">{program.cardMeta}</p>
-        </div>
+        <span class="program-cat">{program.category}</span>
+        <h1>{program.title}</h1>
+        <p class="program-sub">{program.cardMeta}</p>
       </div>
     </header>
 
@@ -269,10 +267,10 @@ if (program.youtube) {
   /* Hero */
   .program-hero {
     position: relative;
-    min-height: 56vh;
+    min-height: 38vh;
     display: flex;
     align-items: flex-end;
-    padding: 130px 8% 60px;
+    padding: 100px 8% 40px;
     overflow: hidden;
   }
   .program-hero-bg {
@@ -287,7 +285,7 @@ if (program.youtube) {
     max-width: 900px;
   }
   .program-logo {
-    height: clamp(130px, 16vw, 200px);
+    height: clamp(80px, 10vw, 130px);
     width: auto;
     max-width: 100%;
     object-fit: contain;
@@ -338,29 +336,9 @@ if (program.youtube) {
     letter-spacing: -0.01em;
   }
   .program-sub {
-    margin-top: 0.6rem;
-    color: rgba(255, 255, 255, 0.72);
+    margin-top: 1rem;
+    color: rgba(255, 255, 255, 0.7);
     font-size: 0.95rem;
-    margin-bottom: 0;
-  }
-
-  /* frosted text card inside hero */
-  .hero-text-card {
-    display: inline-block;
-    max-width: 680px;
-    margin-top: 1.2rem;
-    padding: 24px 32px 28px;
-    background: rgba(6, 10, 16, 0.52);
-    backdrop-filter: blur(18px);
-    -webkit-backdrop-filter: blur(18px);
-    border: 1px solid rgba(255, 255, 255, 0.12);
-    border-left: 3px solid var(--color-orange);
-    border-radius: 14px;
-    transition: background 0.3s, box-shadow 0.3s;
-  }
-  .hero-text-card:hover {
-    background: rgba(6, 10, 16, 0.68);
-    box-shadow: 0 8px 40px rgba(239, 107, 50, 0.15);
   }
 
   /* Body */

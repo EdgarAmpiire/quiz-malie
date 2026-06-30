@@ -97,9 +97,11 @@ if (program.youtube) {
             <img src={program.logo} alt={program.title} class="program-logo" />
           )
         }
-        <span class="program-cat">{program.category}</span>
-        <h1>{program.title}</h1>
-        <p class="program-sub">{program.cardMeta}</p>
+        <div class="hero-text-card">
+          <span class="program-cat">{program.category}</span>
+          <h1>{program.title}</h1>
+          <p class="program-sub">{program.cardMeta}</p>
+        </div>
       </div>
     </header>
 
@@ -336,9 +338,29 @@ if (program.youtube) {
     letter-spacing: -0.01em;
   }
   .program-sub {
-    margin-top: 1rem;
-    color: rgba(255, 255, 255, 0.7);
+    margin-top: 0.6rem;
+    color: rgba(255, 255, 255, 0.72);
     font-size: 0.95rem;
+    margin-bottom: 0;
+  }
+
+  /* frosted text card inside hero */
+  .hero-text-card {
+    display: inline-block;
+    max-width: 680px;
+    margin-top: 1.2rem;
+    padding: 24px 32px 28px;
+    background: rgba(6, 10, 16, 0.52);
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-left: 3px solid var(--color-orange);
+    border-radius: 14px;
+    transition: background 0.3s, box-shadow 0.3s;
+  }
+  .hero-text-card:hover {
+    background: rgba(6, 10, 16, 0.68);
+    box-shadow: 0 8px 40px rgba(239, 107, 50, 0.15);
   }
 
   /* Body */

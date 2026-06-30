@@ -38,6 +38,8 @@ import { services } from '../data/services';
     margin-bottom: 56px;
     gap: 40px;
   }
+  .services-header .section-label { color: var(--color-orange); }
+  .services-header .section-label::before { background: var(--color-orange); }
   .services-desc {
     font-size: 0.95rem;
     color: var(--color-text-muted);
@@ -70,15 +72,15 @@ import { services } from '../data/services';
     position: absolute;
     top: 0; bottom: 0; left: 0;
     width: 3px;
-    background: linear-gradient(180deg, var(--color-green-light), var(--color-blue-mid));
+    background: linear-gradient(180deg, var(--color-green-light), var(--color-orange));
     transform: scaleY(0);
     transform-origin: top;
     transition: transform 0.4s ease;
   }
   .service-card:hover {
     transform: translateY(-6px);
-    background: linear-gradient(135deg, #1A8A5A 0%, #1565C0 100%);
-    box-shadow: 0 22px 48px rgba(21,101,192,0.28);
+    background: linear-gradient(135deg, #1A8A5A 0%, #BA4E20 100%);
+    box-shadow: 0 22px 48px rgba(186,78,32,0.28);
     border-color: transparent;
     --color-green: #ffffff;            /* icon stroke → white */
   }

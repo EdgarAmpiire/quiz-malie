@@ -53,7 +53,14 @@ const photos = [
   .sponsors-section {
     padding: 80px 8%;
     background: var(--color-off-white);
-    border-top: 1px solid var(--color-light-gray);
+    position: relative;
+  }
+  .sponsors-section::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--color-green-light), var(--color-orange));
   }
   .sponsors-label {
     text-align: center;
@@ -102,7 +109,7 @@ const photos = [
     transition: color 0.25s;
     border-right: 1px solid var(--color-light-gray);
   }
-  .sponsor-item:hover { color: var(--color-green); }
+  .sponsor-item:hover { color: var(--color-orange-deep); }
 
   @media (max-width: 768px) {
     .photo-strip { grid-template-columns: repeat(2, 1fr); height: auto; }

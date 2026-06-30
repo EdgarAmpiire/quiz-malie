@@ -44,7 +44,19 @@ import { programs } from '../data/programs';
 </footer>
 
 <style>
-  footer { background: var(--color-dark); color: rgba(255,255,255,0.7); padding: 60px 8% 30px; }
+  footer {
+    background: var(--color-dark);
+    color: rgba(255,255,255,0.7);
+    padding: 60px 8% 30px;
+    position: relative;
+  }
+  footer::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--color-green-light), var(--color-orange));
+  }
   .footer-top {
     display: flex;
     justify-content: space-between;
@@ -81,7 +93,7 @@ import { programs } from '../data/programs';
     font-size: 0.9rem;
     transition: color 0.25s;
   }
-  .footer-nav-list a:hover { color: var(--color-green-light); }
+  .footer-nav-list a:hover { color: var(--color-orange-light); }
   .footer-bottom {
     display: flex;
     justify-content: space-between;

@@ -99,7 +99,9 @@
 </section>
 
 <style>
-  #contact { padding: 120px 8% 100px; background: #fff; }
+  #contact { padding: 120px 8% 100px; background: linear-gradient(180deg, #ffffff 0%, var(--color-off-white) 100%); }
+  #contact > .reveal > .section-label { color: var(--color-orange); }
+  #contact > .reveal > .section-label::before { background: var(--color-orange); }
   .contact-grid {
     display: grid;
     grid-template-columns: 1fr 1.2fr;
@@ -148,10 +150,20 @@
   .contact-detail-val { font-size: 0.95rem; color: var(--color-text); font-weight: 400; }
 
   .contact-form {
-    background: var(--color-off-white);
+    background: #fff;
     border-radius: 20px;
     padding: 44px 40px;
     border: 1px solid var(--color-light-gray);
+    box-shadow: 0 24px 60px rgba(13,59,122,0.08);
+    position: relative;
+    overflow: hidden;
+  }
+  .contact-form::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--color-navy), var(--color-green-light), var(--color-orange));
   }
   .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
   .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
@@ -171,7 +183,7 @@
     font-family: var(--font-body);
     font-size: 0.95rem;
     color: var(--color-text);
-    background: #fff;
+    background: var(--color-off-white);
     outline: none;
     transition: border-color 0.25s, box-shadow 0.25s;
     resize: none;
@@ -200,7 +212,7 @@
     letter-spacing: 0.03em;
     transition: background 0.25s, transform 0.2s, box-shadow 0.25s;
   }
-  .form-submit:hover { background: var(--color-green); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(26,138,90,0.3); }
+  .form-submit:hover { background: var(--color-orange); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(239,107,50,0.3); }
   .form-submit:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
   .form-status { margin-top: 14px; font-size: 0.9rem; text-align: center; min-height: 1.2em; }
   .form-status.success { color: var(--color-green); }

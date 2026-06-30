@@ -15,6 +15,11 @@
   --color-text-muted: #5A7080;
   --color-gold: #F0B429;
 
+  --color-orange: #EF6B32;
+  --color-orange-light: #FFB290;
+  --color-orange-deep: #BA4E20;
+  --color-orange-pale: #FCEAE1;
+
   --font-heading: "Barlow Condensed", sans-serif;
   --font-body: "DM Sans", sans-serif;
   --font-serif: "Playfair Display", serif;

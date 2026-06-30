@@ -62,14 +62,7 @@ const fallback = {
 };
 const brand = program.brand ?? fallback;
 
-function rgba(hex: string, a: number) {
-  const h = hex.replace("#", "");
-  const r = parseInt(h.slice(0, 2), 16);
-  const g = parseInt(h.slice(2, 4), 16);
-  const b = parseInt(h.slice(4, 6), 16);
-  return `rgba(${r}, ${g}, ${b}, ${a})`;
-}
-const heroOverlay = `linear-gradient(135deg, ${rgba(brand.deep, 0.92)} 0%, ${rgba(brand.deep, 0.8)} 55%, ${rgba(brand.accent, 0.6)} 100%)`;
+const heroOverlay = `linear-gradient(0deg, rgba(6,10,16,0.92) 0%, rgba(6,10,16,0.65) 40%, rgba(6,10,16,0.42) 70%, rgba(6,10,16,0.25) 100%)`;
 const brandVars = `--bp:${brand.primary}; --bp-d:${brand.primaryOnDark}; --bd:${brand.deep}; --ba:${brand.accent};`;
 
 // YouTube playlist (optional)
@@ -669,7 +662,7 @@ if (program.youtube) {
     transition: background-color 0.25s;
   }
   .pg-year-select:hover {
-    background-color: var(--color-blue);
+    background-color: var(--color-orange);
   }
 
   .pg-grid {

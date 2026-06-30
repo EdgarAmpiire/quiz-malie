@@ -6,7 +6,7 @@
       <div class="hero-grid"></div>
       <div class="hero-content">
         <div class="slide-tag"><span></span> Uganda's Premier Quiz Platform</div>
-        <h1 class="hero-headline">Where<br /><em>Knowledge</em><br /><span class="outline">Meets Stage</span></h1>
+        <h1 class="hero-headline">Where<br /><em>Knowledge</em><br /><span class="fill-word">Meets Stage</span></h1>
         <p class="hero-sub">Bringing Uganda's brightest young minds together through education, entertainment, and the thrill of competition.</p>
         <div class="hero-btns">
           <a href="#gallery" class="btn-primary">
@@ -22,7 +22,7 @@
       <div class="hero-grid"></div>
       <div class="hero-content">
         <div class="slide-tag"><span></span> Face to Face School Quiz</div>
-        <h1 class="hero-headline">Inspiring<br /><em>Critical</em><br /><span class="outline">Thinking</span></h1>
+        <h1 class="hero-headline">Inspiring<br /><em>Critical</em><br /><span class="fill-word">Thinking</span></h1>
         <p class="hero-sub">Over 150 schools, 3 national grand finales, and 78+ episodes of educational content broadcast across Uganda.</p>
         <div class="hero-btns">
           <a href="#services" class="btn-primary">
@@ -38,7 +38,7 @@
       <div class="hero-grid"></div>
       <div class="hero-content">
         <div class="slide-tag"><span></span> Health & Education Content</div>
-        <h1 class="hero-headline">Educate.<br /><em>Entertain.</em><br /><span class="outline">Empower.</span></h1>
+        <h1 class="hero-headline">Educate.<br /><em>Entertain.</em><br /><span class="fill-word">Empower.</span></h1>
         <p class="hero-sub">Uganda's #1 online platform for educative, informative, and entertaining health and school content.</p>
         <div class="hero-btns">
           <a href="#contact" class="btn-primary">
@@ -88,7 +88,8 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(135deg, rgba(13,59,122,0.82) 0%, rgba(13,59,122,0.55) 50%, rgba(26,86,160,0.3) 100%);
+    background: linear-gradient(90deg, rgba(6,10,16,0.85) 0%, rgba(6,10,16,0.6) 35%, rgba(6,10,16,0.2) 65%, rgba(6,10,16,0) 88%),
+      linear-gradient(0deg, rgba(6,10,16,0.45) 0%, rgba(6,10,16,0) 35%);
   }
   .hero-grid {
     position: absolute;
@@ -143,9 +144,8 @@
     animation: slideUp 0.9s 0.5s forwards;
   }
   .hero-headline em { font-style: normal; color: var(--color-green-light); }
-  .hero-headline .outline {
-    -webkit-text-stroke: 2px rgba(255,255,255,0.6);
-    color: transparent;
+  .hero-headline .fill-word {
+    color: #fff;
   }
   .hero-sub {
     font-size: 1.05rem;
@@ -181,7 +181,7 @@
     transition: background 0.25s, transform 0.2s, box-shadow 0.25s;
     border: none; cursor: pointer;
   }
-  .btn-primary:hover { background: #22a065; transform: translateY(-3px); box-shadow: 0 12px 30px rgba(40,184,112,0.35); }
+  .btn-primary:hover { background: var(--color-orange); transform: translateY(-3px); box-shadow: 0 12px 30px rgba(239,107,50,0.35); }
   .btn-outline {
     display: inline-flex;
     align-items: center;

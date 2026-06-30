@@ -1,25 +1,13 @@
 ---
 import { programs } from '../data/programs';
 
-const fallback = { primary: '#1A8A5A', primaryOnDark: '#28B870', deep: '#0D3B7A', accent: '#2979D8' };
-
-function rgba(hex: string, a: number) {
-  const h = hex.replace('#', '');
-  const r = parseInt(h.slice(0, 2), 16);
-  const g = parseInt(h.slice(2, 4), 16);
-  const b = parseInt(h.slice(4, 6), 16);
-  return `rgba(${r}, ${g}, ${b}, ${a})`;
-}
-
 const cards = programs.map((p, i) => {
-  const b = p.brand ?? fallback;
-  const overlay = `linear-gradient(to top, ${rgba(b.deep, 0.96)} 0%, ${rgba(b.deep, 0.55)} 42%, ${rgba(b.accent, 0.28)} 75%, transparent 100%)`;
+  const accent = p.brand?.primaryOnDark ?? '#28B870';
   return {
     ...p,
     href: `/programs/${p.slug}`,
     featured: i === 0,
-    cardStyle: `--card-accent:${b.primaryOnDark}; background:${b.deep};`,
-    overlayStyle: `background:${overlay};`,
+    cardStyle: `--card-accent:${accent};`,
   };
 });
 ---
@@ -32,7 +20,7 @@ const cards = programs.map((p, i) => {
     {cards.map((p) => (
       <a href={p.href} class:list={["event-card", "reveal", p.featured && "featured"]} style={p.cardStyle}>
         <div class="event-img"><img src={p.heroImage} alt={p.title} /></div>
-        <div class="event-overlay" style={p.overlayStyle}>
+        <div class="event-overlay">
           <span class="event-date">{p.category}</span>
           <h3 class="event-title">{p.title}</h3>
           <p class="event-meta">{p.cardMeta}</p>
@@ -44,7 +32,7 @@ const cards = programs.map((p, i) => {
 </section>
 
 <style>
-  #gallery { padding: 120px 8% 100px; background: #fff; }
+  #gallery { padding: 120px 8% 100px; background: linear-gradient(180deg, var(--color-off-white) 0%, #ffffff 40%); }
   .events-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -58,16 +46,17 @@ const cards = programs.map((p, i) => {
     background: var(--color-navy);
     text-decoration: none;
     display: block;
-    transition: transform 0.35s, box-shadow 0.35s;
+    border: 1px solid transparent;
+    transition: transform 0.35s, box-shadow 0.35s, border-color 0.35s;
   }
-  .event-card:hover { transform: translateY(-6px); box-shadow: 0 24px 60px rgba(13,59,122,0.18); }
+  .event-card:hover { transform: translateY(-6px); box-shadow: 0 24px 60px rgba(13,59,122,0.18); border-color: rgba(239,107,50,0.45); }
   .event-img { width: 100%; aspect-ratio: 16/9; }
   .event-img img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s; }
   .event-card:hover .event-img img { transform: scale(1.05); }
   .event-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(to top, rgba(13,59,122,0.94) 0%, rgba(13,59,122,0.15) 60%, transparent 100%);
+    background: linear-gradient(to top, rgba(6,10,16,0.92) 0%, rgba(6,10,16,0.4) 45%, rgba(6,10,16,0.05) 75%, transparent 100%);
     padding: 28px;
     display: flex;
     flex-direction: column;

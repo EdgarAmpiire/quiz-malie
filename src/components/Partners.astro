@@ -52,15 +52,16 @@ const photos = [
 
   .sponsors-section {
     padding: 80px 8%;
-    background: var(--color-off-white);
+    background: var(--color-dark-surface);
     position: relative;
   }
   .sponsors-section::before {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0;
-    height: 2px;
-    background: linear-gradient(90deg, var(--color-green-light), var(--color-orange));
+    height: 1px;
+    background: linear-gradient(90deg, var(--color-green-neon), var(--color-orange));
+    box-shadow: 0 0 10px rgba(0,232,122,0.2);
   }
   .sponsors-label {
     text-align: center;
@@ -68,7 +69,7 @@ const photos = [
     font-weight: 600;
     letter-spacing: 0.15em;
     text-transform: uppercase;
-    color: var(--color-mid-gray);
+    color: rgba(255,255,255,0.3);
     margin-bottom: 40px;
   }
   .sponsors-track-wrap { overflow: hidden; position: relative; }
@@ -81,8 +82,8 @@ const photos = [
     z-index: 2;
     pointer-events: none;
   }
-  .sponsors-track-wrap::before { left: 0; background: linear-gradient(to right, var(--color-off-white), transparent); }
-  .sponsors-track-wrap::after { right: 0; background: linear-gradient(to left, var(--color-off-white), transparent); }
+  .sponsors-track-wrap::before { left: 0; background: linear-gradient(to right, var(--color-dark-surface), transparent); }
+  .sponsors-track-wrap::after { right: 0; background: linear-gradient(to left, var(--color-dark-surface), transparent); }
   .sponsors-track {
     display: flex;
     width: max-content;
@@ -105,11 +106,11 @@ const photos = [
     font-size: 1.1rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--color-mid-gray);
+    color: rgba(255,255,255,0.28);
     transition: color 0.25s;
-    border-right: 1px solid var(--color-light-gray);
+    border-right: 1px solid rgba(255,255,255,0.08);
   }
-  .sponsor-item:hover { color: var(--color-orange-deep); }
+  .sponsor-item:hover { color: var(--color-green-neon); }
 
   @media (max-width: 768px) {
     .photo-strip { grid-template-columns: repeat(2, 1fr); height: auto; }

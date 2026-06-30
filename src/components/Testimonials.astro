@@ -48,7 +48,7 @@
 <style>
   #testimonials {
     padding: 120px 8% 100px;
-    background: var(--color-navy);
+    background: var(--color-dark-elevated);
     position: relative;
     overflow: hidden;
   }
@@ -56,13 +56,21 @@
     content: '';
     position: absolute;
     top: -200px; right: -200px;
-    width: 600px; height: 600px;
-    background: radial-gradient(circle, rgba(40,184,112,0.08) 0%, transparent 70%);
+    width: 700px; height: 700px;
+    background: radial-gradient(circle, rgba(0,232,122,0.06) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  #testimonials::after {
+    content: '';
+    position: absolute;
+    bottom: -150px; left: -150px;
+    width: 500px; height: 500px;
+    background: radial-gradient(circle, rgba(239,107,50,0.05) 0%, transparent 65%);
     pointer-events: none;
   }
 
   /* Light heading on navy */
-  .testi-head .section-label { color: #6ae8b0; }
+  .testi-head .section-label { color: var(--color-green-neon); }
   .testi-head .section-title { color: #fff; }
   .testi-head .section-title span { color: var(--color-green-light); }
 
@@ -73,14 +81,14 @@
     margin-top: 50px;
   }
   .testi-card {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
     border-radius: 16px;
     padding: 32px 28px;
     position: relative;
-    transition: background 0.3s, border-color 0.3s, transform 0.3s;
+    transition: background 0.3s, border-color 0.3s, transform 0.3s, box-shadow 0.3s;
   }
-  .testi-card:hover { background: rgba(255,255,255,0.08); border-color: rgba(40,184,112,0.3); transform: translateY(-6px); }
+  .testi-card:hover { background: rgba(255,255,255,0.06); border-color: rgba(0,232,122,0.22); transform: translateY(-6px); box-shadow: 0 20px 50px rgba(0,0,0,0.3), 0 0 30px rgba(0,232,122,0.06); }
   .testi-quote-mark {
     font-family: var(--font-heading);
     font-size: 5rem;
@@ -108,7 +116,7 @@
   .testi-avatar {
     width: 42px; height: 42px;
     border-radius: 50%;
-    background: linear-gradient(135deg, var(--color-green-light), var(--color-orange));
+    background: linear-gradient(135deg, var(--color-green-neon), var(--color-orange));
     display: flex;
     align-items: center;
     justify-content: center;

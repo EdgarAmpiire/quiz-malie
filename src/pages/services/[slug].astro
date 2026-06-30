@@ -110,10 +110,11 @@ try {
 <style>
   .service-hero {
     position: relative;
-    background: linear-gradient(135deg, #1A8A5A 0%, #1565C0 100%);
+    background: linear-gradient(135deg, #0A180E 0%, var(--color-dark-base) 100%);
     padding: 160px 8% 90px;
     text-align: center;
     color: #fff;
+    border-bottom: 1px solid rgba(0,232,122,0.12);
   }
   .hero-back {
     position: absolute;
@@ -162,7 +163,7 @@ try {
     aspect-ratio: 4/3;
     border-radius: 14px;
     overflow: hidden;
-    box-shadow: 0 10px 30px rgba(13,59,122,0.10);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.3);
   }
   .sg-item img { width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 0.5s ease; }
   .sg-item:hover img { transform: scale(1.06); }
@@ -179,11 +180,11 @@ try {
   .sg-card {
     display: flex; flex-direction: column;
     align-items: center; justify-content: center; gap: 12px;
-    background: linear-gradient(135deg, #f5f7fa, #e8ecf1);
-    color: var(--color-navy); text-decoration: none; text-align: center;
+    background: var(--color-dark-elevated);
+    color: #E8EAF0; text-decoration: none; text-align: center;
     padding: 24px;
   }
-  .sg-card svg { width: 46px; height: 46px; stroke: var(--color-blue); }
+  .sg-card svg { width: 46px; height: 46px; stroke: var(--color-green-neon); }
   .sg-card-label { font-weight: 600; font-size: 0.9rem; line-height: 1.3; text-transform: capitalize; }
 
   @media (max-width: 900px) {

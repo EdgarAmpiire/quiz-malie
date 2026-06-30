@@ -73,7 +73,7 @@ const leaders = [
 <style>
   #about {
     padding: 120px 8% 100px;
-    background: linear-gradient(180deg, #ffffff 0%, var(--color-off-white) 100%);
+    background: var(--color-dark-surface);
     position: relative;
     overflow: hidden;
   }
@@ -81,7 +81,15 @@ const leaders = [
     content: '';
     position: absolute;
     top: -160px; left: -160px;
-    width: 480px; height: 480px;
+    width: 560px; height: 560px;
+    background: radial-gradient(circle, rgba(0,232,122,0.07) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  #about::after {
+    content: '';
+    position: absolute;
+    bottom: -100px; right: -100px;
+    width: 400px; height: 400px;
     background: radial-gradient(circle, rgba(239,107,50,0.06) 0%, transparent 70%);
     pointer-events: none;
   }
@@ -99,14 +107,14 @@ const leaders = [
     font-size: clamp(2.5rem, 4vw, 4rem);
     line-height: 1;
     text-transform: uppercase;
-    color: var(--color-navy);
+    color: #F0F2F8;
     margin-bottom: 1.5rem;
     letter-spacing: -0.01em;
   }
-  .about-headline span { color: var(--color-green); }
+  .about-headline span { color: var(--color-green-neon); }
   .about-text {
     font-size: 1rem;
-    color: var(--color-text-muted);
+    color: rgba(255,255,255,0.58);
     line-height: 1.8;
     margin-bottom: 1.5rem;
     font-weight: 300;
@@ -116,20 +124,20 @@ const leaders = [
     gap: 40px;
     margin-top: 2.5rem;
     padding-top: 2rem;
-    border-top: 1px solid var(--color-light-gray);
+    border-top: 1px solid rgba(255,255,255,0.08);
   }
   .stat-num {
     font-family: var(--font-heading);
     font-size: 2.6rem;
     font-weight: 800;
-    color: var(--color-navy);
+    color: #F0F2F8;
     line-height: 1;
     display: block;
   }
-  .stat-num span { color: var(--color-green); }
+  .stat-num span { color: var(--color-green-neon); }
   .stat-lbl {
     font-size: 0.82rem;
-    color: var(--color-text-muted);
+    color: rgba(255,255,255,0.45);
     font-weight: 400;
     letter-spacing: 0.04em;
     margin-top: 4px;
@@ -142,7 +150,7 @@ const leaders = [
     border-radius: 16px;
     overflow: hidden;
   }
-  .about-img-main img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .about-img-main img { width: 100%; height: 100%; object-fit: cover; display: block; filter: brightness(0.88); }
   .about-logo-badge {
     position: absolute;
     top: -18px; left: -18px;
@@ -291,11 +299,11 @@ const leaders = [
     font-weight: 700;
     font-size: clamp(1.4rem, 2.6vw, 2.2rem);
     text-transform: uppercase;
-    color: var(--color-navy);
+    color: rgba(255,255,255,0.82);
     letter-spacing: 0.01em;
     line-height: 1.25;
   }
-  .about-tagline p span { color: var(--color-green); }
+  .about-tagline p span { color: var(--color-green-neon); }
 
   .about-cta {
     display: inline-flex;
@@ -325,7 +333,7 @@ const leaders = [
   .leadership-title {
     font-family: var(--font-heading);
     font-size: clamp(1.5rem, 3vw, 2rem);
-    color: var(--color-navy);
+    color: #F0F2F8;
     margin-bottom: 36px;
     letter-spacing: 0.5px;
   }
@@ -342,13 +350,13 @@ const leaders = [
     margin: 0 auto 18px;
     border-radius: 50%;
     overflow: hidden;
-    border: 4px solid #fff;
-    outline: 2px solid var(--color-green-pale);
-    box-shadow: 0 10px 30px rgba(13,59,122,0.15);
+    border: 3px solid rgba(255,255,255,0.15);
+    outline: 2px solid var(--color-green-neon);
+    box-shadow: 0 0 24px rgba(0,232,122,0.15);
   }
   .leader-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
-  .leader-name { font-family: var(--font-heading); font-size: 1.25rem; color: var(--color-text); margin-bottom: 4px; }
-  .leader-role { color: var(--color-green); font-weight: 600; font-size: 0.95rem; }
+  .leader-name { font-family: var(--font-heading); font-size: 1.25rem; color: #F0F2F8; margin-bottom: 4px; }
+  .leader-role { color: var(--color-green-neon); font-weight: 600; font-size: 0.95rem; }
   .leadership-btn {
     display: inline-flex; align-items: center; gap: 8px;
     background: var(--color-green); color: #fff;

@@ -99,9 +99,9 @@
 </section>
 
 <style>
-  #contact { padding: 120px 8% 100px; background: linear-gradient(180deg, #ffffff 0%, var(--color-off-white) 100%); }
+  #contact { padding: 120px 8% 100px; background: var(--color-dark-surface); }
   #contact > .reveal > .section-label { color: var(--color-orange); }
-  #contact > .reveal > .section-label::before { background: var(--color-orange); }
+  #contact > .reveal > .section-label::before { background: var(--color-orange); box-shadow: 0 0 8px rgba(239,107,50,0.4); }
   .contact-grid {
     display: grid;
     grid-template-columns: 1fr 1.2fr;
@@ -114,14 +114,14 @@
     font-weight: 800;
     font-size: 2.5rem;
     text-transform: uppercase;
-    color: var(--color-navy);
+    color: #F0F2F8;
     line-height: 1;
     margin-bottom: 1.2rem;
   }
-  .contact-info-title span { color: var(--color-green); }
+  .contact-info-title span { color: var(--color-green-neon); }
   .contact-info-text {
     font-size: 0.95rem;
-    color: var(--color-text-muted);
+    color: rgba(255,255,255,0.48);
     line-height: 1.8;
     font-weight: 300;
     margin-bottom: 2rem;
@@ -131,30 +131,31 @@
   .contact-detail-icon {
     width: 40px; height: 40px;
     border-radius: 10px;
-    background: var(--color-green-pale);
+    background: rgba(0,232,122,0.08);
     display: flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
     margin-top: 2px;
+    --color-green: var(--color-green-neon);
   }
   .contact-detail-label {
     font-size: 0.75rem;
     font-weight: 600;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: var(--color-mid-gray);
+    color: rgba(255,255,255,0.35);
     display: block;
     margin-bottom: 2px;
   }
-  .contact-detail-val { font-size: 0.95rem; color: var(--color-text); font-weight: 400; }
+  .contact-detail-val { font-size: 0.95rem; color: rgba(255,255,255,0.7); font-weight: 400; }
 
   .contact-form {
-    background: #fff;
+    background: var(--color-dark-elevated);
     border-radius: 20px;
     padding: 44px 40px;
-    border: 1px solid var(--color-light-gray);
-    box-shadow: 0 24px 60px rgba(13,59,122,0.08);
+    border: 1px solid rgba(255,255,255,0.07);
+    box-shadow: 0 24px 60px rgba(0,0,0,0.3);
     position: relative;
     overflow: hidden;
   }
@@ -162,8 +163,9 @@
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0;
-    height: 4px;
-    background: linear-gradient(90deg, var(--color-navy), var(--color-green-light), var(--color-orange));
+    height: 2px;
+    background: linear-gradient(90deg, var(--color-green-neon), var(--color-orange));
+    box-shadow: 0 0 12px rgba(0,232,122,0.25);
   }
   .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 16px; }
   .form-group { display: flex; flex-direction: column; gap: 6px; margin-bottom: 16px; }
@@ -172,27 +174,28 @@
     font-weight: 600;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    color: var(--color-text-muted);
+    color: rgba(255,255,255,0.4);
   }
   .form-group input,
   .form-group select,
   .form-group textarea {
-    border: 1.5px solid var(--color-light-gray);
+    border: 1px solid rgba(255,255,255,0.1);
     border-radius: 10px;
     padding: 13px 16px;
     font-family: var(--font-body);
     font-size: 0.95rem;
-    color: var(--color-text);
-    background: var(--color-off-white);
+    color: #E8EAF0;
+    background: rgba(255,255,255,0.05);
     outline: none;
     transition: border-color 0.25s, box-shadow 0.25s;
     resize: none;
   }
+  .form-group select option { background: var(--color-dark-elevated); color: #E8EAF0; }
   .form-group input:focus,
   .form-group select:focus,
   .form-group textarea:focus {
-    border-color: var(--color-green-light);
-    box-shadow: 0 0 0 4px rgba(40,184,112,0.12);
+    border-color: var(--color-green-neon);
+    box-shadow: 0 0 0 3px rgba(0,232,122,0.12);
   }
   .form-submit {
     width: 100%;
@@ -200,19 +203,19 @@
     align-items: center;
     justify-content: center;
     gap: 10px;
-    background: var(--color-navy);
-    color: #fff;
+    background: var(--color-green-neon);
+    color: #08080F;
     border: none;
     padding: 15px 32px;
     border-radius: 10px;
     font-family: var(--font-body);
-    font-weight: 600;
+    font-weight: 700;
     font-size: 0.95rem;
     cursor: pointer;
     letter-spacing: 0.03em;
     transition: background 0.25s, transform 0.2s, box-shadow 0.25s;
   }
-  .form-submit:hover { background: var(--color-orange); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(239,107,50,0.3); }
+  .form-submit:hover { background: var(--color-orange); color: #fff; transform: translateY(-2px); box-shadow: 0 10px 30px rgba(239,107,50,0.3); }
   .form-submit:disabled { opacity: 0.7; cursor: not-allowed; transform: none; }
   .form-status { margin-top: 14px; font-size: 0.9rem; text-align: center; min-height: 1.2em; }
   .form-status.success { color: var(--color-green); }

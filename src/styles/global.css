@@ -20,6 +20,13 @@
   --color-orange-deep: #BA4E20;
   --color-orange-pale: #FCEAE1;
 
+  --color-dark-base: #08080F;
+  --color-dark-surface: #0E0E18;
+  --color-dark-elevated: #14141F;
+  --color-dark-border: rgba(255,255,255,0.07);
+  --color-green-neon: #00E87A;
+  --color-green-neon-glow: rgba(0,232,122,0.18);
+
   --font-heading: "Barlow Condensed", sans-serif;
   --font-body: "DM Sans", sans-serif;
   --font-serif: "Playfair Display", serif;
@@ -29,8 +36,8 @@ html { scroll-behavior: smooth; }
 
 body {
   font-family: var(--font-body);
-  color: var(--color-text);
-  background: #ffffff;
+  color: #E8EAF0;
+  background: var(--color-dark-base);
   overflow-x: hidden;
 }
 
@@ -43,15 +50,16 @@ body {
   font-weight: 700;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: var(--color-green);
+  color: var(--color-green-neon);
   margin-bottom: 1rem;
 }
 .section-label::before {
   content: '';
   display: inline-block;
   width: 28px; height: 2px;
-  background: var(--color-green-light);
+  background: var(--color-green-neon);
   border-radius: 2px;
+  box-shadow: 0 0 8px var(--color-green-neon-glow);
 }
 
 /* Scroll reveal */
@@ -74,7 +82,7 @@ body {
   font-size: clamp(2.5rem, 4.5vw, 4rem);
   line-height: 0.95;
   text-transform: uppercase;
-  color: var(--color-navy);
+  color: #F0F2F8;
   letter-spacing: -0.01em;
 }
-.section-title span { color: var(--color-green); }
+.section-title span { color: var(--color-green-neon); }

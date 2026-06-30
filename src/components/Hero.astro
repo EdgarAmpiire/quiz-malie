@@ -88,17 +88,26 @@
     content: '';
     position: absolute;
     inset: 0;
-    background: linear-gradient(90deg, rgba(6,10,16,0.85) 0%, rgba(6,10,16,0.6) 35%, rgba(6,10,16,0.2) 65%, rgba(6,10,16,0) 88%),
-      linear-gradient(0deg, rgba(6,10,16,0.45) 0%, rgba(6,10,16,0) 35%);
+    background:
+      linear-gradient(90deg, rgba(0,0,0,0.93) 0%, rgba(0,0,0,0.72) 38%, rgba(0,0,0,0.25) 68%, rgba(0,0,0,0) 88%),
+      linear-gradient(0deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 38%);
   }
   .hero-grid {
     position: absolute;
     inset: 0;
     background-image:
-      linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
-    background-size: 60px 60px;
+      linear-gradient(rgba(0,232,122,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,232,122,0.04) 1px, transparent 1px),
+      radial-gradient(circle, rgba(0,232,122,0.12) 1px, transparent 1px),
+      radial-gradient(circle, rgba(239,107,50,0.08) 1px, transparent 1px);
+    background-size: 60px 60px, 60px 60px, 120px 120px, 180px 180px;
+    background-position: 0 0, 0 0, 30px 30px, 80px 80px;
+    animation: gridDrift 25s linear infinite;
     z-index: 1;
+  }
+  @keyframes gridDrift {
+    0%   { background-position: 0 0, 0 0, 30px 30px, 80px 80px; }
+    100% { background-position: 60px 60px, 60px 60px, 90px 90px, 260px 260px; }
   }
   .hero-content {
     position: relative;
@@ -143,9 +152,10 @@
     transform: translateY(30px);
     animation: slideUp 0.9s 0.5s forwards;
   }
-  .hero-headline em { font-style: normal; color: var(--color-green-light); }
+  .hero-headline em { font-style: normal; color: var(--color-green-neon); text-shadow: 0 0 30px rgba(0,232,122,0.4); }
   .hero-headline .fill-word {
-    color: #fff;
+    color: var(--color-orange);
+    text-shadow: 0 0 30px rgba(239,107,50,0.35);
   }
   .hero-sub {
     font-size: 1.05rem;
@@ -181,7 +191,7 @@
     transition: background 0.25s, transform 0.2s, box-shadow 0.25s;
     border: none; cursor: pointer;
   }
-  .btn-primary:hover { background: var(--color-orange); transform: translateY(-3px); box-shadow: 0 12px 30px rgba(239,107,50,0.35); }
+  .btn-primary:hover { background: var(--color-orange); transform: translateY(-3px); box-shadow: 0 12px 30px rgba(239,107,50,0.45), 0 0 0 1px rgba(239,107,50,0.3); }
   .btn-outline {
     display: inline-flex;
     align-items: center;

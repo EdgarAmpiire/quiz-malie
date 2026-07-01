@@ -29,7 +29,7 @@ import { services } from '../data/services';
 </section>
 
 <style>
-  #services { padding: 120px 8% 100px; background: var(--color-off-white); }
+  #services { padding: 120px 8% 100px; background: #EFF7F2; }
 
   .services-header {
     display: flex;
@@ -78,16 +78,11 @@ import { services } from '../data/services';
     transition: transform 0.4s ease;
   }
   .service-card:hover {
-    transform: translateY(-6px);
-    background: linear-gradient(135deg, #1A8A5A 0%, #BA4E20 100%);
-    box-shadow: 0 22px 48px rgba(186,78,32,0.28);
-    border-color: transparent;
-    --color-green: #ffffff;            /* icon stroke → white */
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.09);
+    border-color: var(--color-green-light);
   }
-  .service-card:hover::before { opacity: 0; }
-  .service-card:hover .service-name { color: #fff; }
-  .service-card:hover .service-text { color: rgba(255,255,255,0.85); }
-  .service-card:hover .service-num  { color: rgba(255,255,255,0.18); }
+  .service-card:hover::before { transform: scaleY(1); }
   .service-icon {
     width: 54px; height: 54px;
     flex-shrink: 0;
@@ -96,9 +91,9 @@ import { services } from '../data/services';
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: transform 0.3s, background 0.3s;
+    transition: transform 0.3s;
   }
-  .service-card:hover .service-icon { transform: scale(1.06); background: rgba(255,255,255,0.18); }
+  .service-card:hover .service-icon { transform: scale(1.06); }
   .service-body { flex: 1; }
   .service-name {
     font-family: var(--font-heading);

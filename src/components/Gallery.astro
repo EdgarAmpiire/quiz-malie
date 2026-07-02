@@ -258,7 +258,19 @@ const cards = programs.map((p, i) => ({
   /* ── mobile / touch: always show hover content ── */
   @media (hover: none) {
     .event-rest { display: none; }
-    .event-reveal { pointer-events: auto; }
+
+    /* Darken + blur the photo so text reads cleanly without a hover interaction */
+    .event-img img {
+      filter: blur(6px) brightness(0.5);
+      transform: scale(1.1);
+    }
+
+    /* isolation: isolate creates a stacking context so ::before z-index:-1
+       acts as a scrim inside this element, not behind the photo */
+    .event-reveal {
+      pointer-events: auto;
+      isolation: isolate;
+    }
     .reveal-cat,
     .reveal-line,
     .reveal-title,
@@ -267,7 +279,7 @@ const cards = programs.map((p, i) => ({
       opacity: 1;
       transform: none !important;
     }
-    /* keep a scrim so text stays legible on touch */
+    /* darker scrim for extra contrast on bright/varied photos */
     .event-reveal::before {
       content: '';
       position: absolute;
@@ -281,5 +293,16 @@ const cards = programs.map((p, i) => ({
     .events-grid { grid-template-columns: 1fr; }
     .event-card.featured { grid-column: span 1; }
     .event-card.featured .event-img { aspect-ratio: 16/9; }
+  }
+
+  /* Phone: taller cards give the text overlay room to breathe */
+  @media (max-width: 560px) {
+    #gallery { padding: 80px 6% 70px; }
+    .event-img,
+    .event-card.featured .event-img { aspect-ratio: 3/2; }
+    .reveal-title { font-size: 1.15rem; }
+    .event-card.featured .reveal-title { font-size: 1.4rem; }
+    .reveal-meta { font-size: 0.78rem; }
+    .event-reveal { padding: 20px 18px; }
   }
 </style>

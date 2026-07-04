@@ -255,13 +255,21 @@ const cards = programs.map((p, i) => ({
   }
   .event-card.featured .reveal-line { width: 64px; }
 
-  /* ── touch devices: photo stays clear, resting label only ── */
+  /* ── touch devices: photo stays clear, resting label only, no hover effects ── */
   @media (hover: none) {
-    /* show the bottom-left resting label as normal */
     .event-rest { display: block; }
-
-    /* hide the centered hover overlay entirely — no blur, no darkening */
     .event-reveal { display: none; }
+
+    /* disable all hover transforms and shadows */
+    .event-card:hover {
+      transform: none;
+      box-shadow: none;
+      border-color: rgba(255,255,255,0.06);
+    }
+    .event-card:hover .event-img img {
+      filter: none;
+      transform: none;
+    }
   }
 
   @media (max-width: 900px) {
